@@ -4,10 +4,15 @@ import interfaz.*;
 
 public class ImplementacionSistema implements Sistema {
 
+    private  int[] cantMaxSucursales;
 
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
-        return Retorno.noImplementada();
+        if(maxSucursales <= 3){
+            return  Retorno.error1("El sistema tiene que poder almacenar más de 3 sucursales");
+        }
+        this.cantMaxSucursales = new int[maxSucursales];
+        return Retorno.ok();
     }
 
     @Override
