@@ -54,7 +54,14 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno buscarJugador(String alias) {
-        return Retorno.noImplementada();
+        if(alias == null || alias.isEmpty()){
+            return Retorno.error1("Ingrese un alias valido :)");
+        }
+        Jugador jugador = jugadores.encontrar(new Jugador(alias));
+        if(jugador == null){
+            return Retorno.error2("El jugador con alias " + alias + " no existe.");
+        }
+        return  Retorno.ok(jugador.toString());
     }
 
     @Override
