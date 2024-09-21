@@ -51,7 +51,6 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok();
     }
 
-
     @Override
     public Retorno buscarJugador(String alias) {
         if(alias == null || alias.isEmpty()){
@@ -69,9 +68,20 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok(jugadores.listarAscendente());
     }
 
+    //TODO: Precondicion: La categoria no puede ser nula
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
-        return Retorno.ok(jugadores.listarDescendente());
+        String listaJugadores = "";
+
+        if(unaCategoria.getIndice() == Categoria.PRINCIPIANTE.getIndice()){
+             listaJugadores = jugadoresPrincipiantes.listarAscendente();
+        }else if(unaCategoria.getIndice() == Categoria.ESTANDARD.getIndice()){
+            listaJugadores = jugadoresEstandar.listarAscendente();
+        }else{
+            listaJugadores = jugadoresProfesionales.listarAscendente();
+        }
+
+        return Retorno.ok(listaJugadores);
     }
 
     @Override
