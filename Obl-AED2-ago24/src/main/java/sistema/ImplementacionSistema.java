@@ -71,7 +71,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
-        return Retorno.noImplementada();
+        return Retorno.ok(jugadores.listarDescendente());
     }
 
     @Override
