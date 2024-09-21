@@ -41,16 +41,21 @@ public class Equipo implements Comparable<Equipo> {
         return this.jugadores.longitud();
     }
 
-    @Override
-    public int compareTo(Equipo o) {
-        return this.nombre.compareTo(o.getNombre());
-    }
-
     public void agregarJugador(Jugador jugador) {
         jugadores.insertar(jugador);
     }
 
     public String obtenerListadoDeJugadores() {
         return jugadores.listarAscendente();
+    }
+
+    @Override
+    public int compareTo(Equipo o) {
+        return this.nombre.compareTo(o.getNombre());
+    }
+
+    @Override
+    public String toString() {
+        return this.nombre + ";" + this.manager + ";" + this.obtenerCantidadDeJugadores();
     }
 }
