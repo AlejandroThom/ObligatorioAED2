@@ -9,15 +9,19 @@ public class Jugador implements Comparable<Jugador> {
     private String alias;
     private Categoria categoria;
 
-    public Jugador(String alias){
-        this.alias = alias;
-    }
+    private Equipo equipo;
+
 
     public  Jugador(String nombre, String apellido, String alias, Categoria categoria) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.alias = alias;
         this.categoria = categoria;
+    }
+
+    //Usado para busquedas
+    public Jugador(String alias){
+        this.alias = alias;
     }
 
     public String getApellido() {
@@ -52,6 +56,14 @@ public class Jugador implements Comparable<Jugador> {
         this.categoria = categoria;
     }
 
+    public Equipo getEquipo() {
+        return equipo;
+    }
+
+    public void setEquipo(Equipo equipo) {
+        this.equipo = equipo;
+    }
+
     @Override
     public String toString() {
         return this.alias + ";" + this.nombre + ";" + this.apellido + ";" + this.categoria.getTexto();
@@ -60,5 +72,9 @@ public class Jugador implements Comparable<Jugador> {
     @Override
     public int compareTo(Jugador o) {
         return this.alias.compareTo(o.alias);
+    }
+
+    public boolean tieneEquipo() {
+        return this.equipo != null;
     }
 }
