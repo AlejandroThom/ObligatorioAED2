@@ -9,6 +9,11 @@ public class Sucursal implements Comparable<Sucursal> {
         this.nombre = nombre;
     }
 
+    //Usado para búsquedas
+    public Sucursal(String codigo) {
+        this.codigo = codigo;
+    }
+
     public String getNombre() {
         return nombre;
     }

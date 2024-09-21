@@ -14,6 +14,7 @@ public class ImplementacionSistema implements Sistema {
     private ABB<Equipo> equipos;
     private ABB<Jugador> jugadores;
 
+
     private ABB<Jugador> jugadoresPrincipiantes;
     private ABB<Jugador> jugadoresEstandar;
     private ABB<Jugador> jugadoresProfesionales;
@@ -150,9 +151,25 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarSucursal(String codigo, String nombre) {
-        return Retorno.noImplementada();
+        if(sucursales.longitud() >= maxSucursacles){
+            return Retorno.error1("No se pueden registrar mas de " + maxSucursacles + " sucursales.");
+        }
+        if(nullOrEmpty(nombre) || nullOrEmpty(codigo)){
+            return Retorno.error2("Ingrese un nombre y un codigo valido");
+        }
+        if(buscarSucursal(codigo) != null){
+            return Retorno.error3("La sucursal " + codigo + " ya existe.");
+        }
+
+        Sucursal nuevaSucursal = new Sucursal(codigo, nombre);
+        sucursales.insertar(nuevaSucursal);
+
+        return Retorno.ok();
     }
 
+
+
+    //TODO: Grafos
     @Override
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
         return Retorno.noImplementada();
@@ -190,6 +207,10 @@ public class ImplementacionSistema implements Sistema {
 
     private Jugador obtenerJugador(String aliasJugador) {
         return jugadores.encontrar(new Jugador(aliasJugador));
+    }
+
+    private Sucursal buscarSucursal(String codigo) {
+        return sucursales.encontrar(new Sucursal(codigo));
     }
 
     private boolean nullOrEmpty(String texto) {
