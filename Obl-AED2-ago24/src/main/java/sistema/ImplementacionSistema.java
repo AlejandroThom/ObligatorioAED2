@@ -1,8 +1,6 @@
 package sistema;
 
 import TADS.ArbolBB.ABB;
-import TADS.Lista.Lista;
-import TADS.Lista.ListaConMaximo;
 import dominio.Equipo;
 import dominio.Jugador;
 import dominio.Sucursal;
@@ -10,25 +8,30 @@ import interfaz.*;
 
 public class ImplementacionSistema implements Sistema {
 
-    private ListaConMaximo<Sucursal> sucursales;
+    private int maxSucursacles;
+
+    private ABB<Sucursal> sucursales;
     private ABB<Equipo> equipos;
     private ABB<Jugador> jugadores;
 
-    private ABB<Jugador> principiantes;
-    private ABB<Jugador> estandar;
-    private ABB<Jugador> profesionales;
+    private ABB<Jugador> jugadoresPrincipiantes;
+    private ABB<Jugador> jugadoresEstandar;
+    private ABB<Jugador> jugadoresProfesionales;
 
     @Override
     public Retorno inicializarSistema(int maxSucursales) {
         if(maxSucursales <= 3){
             return  Retorno.error1("El sistema tiene que poder almacenar más de 3 sucursales");
         }
-        this.sucursales = new ListaConMaximo<>(maxSucursales);
+        this.maxSucursacles = maxSucursales;
+
+        this.sucursales = new ABB<>();
         this.equipos = new ABB<>();
         this.jugadores = new ABB<>();
-        this.principiantes = new ABB<>();
-        this.estandar = new ABB<>();
-        this.profesionales = new ABB<>();
+
+        this.jugadoresPrincipiantes = new ABB<>();
+        this.jugadoresEstandar = new ABB<>();
+        this.jugadoresProfesionales = new ABB<>();
         return Retorno.ok();
     }
 
