@@ -2,7 +2,7 @@ package dominio;
 
 import interfaz.Categoria;
 
-public class Jugador {
+public class Jugador implements Comparable<Jugador> {
 
     private String nombre;
     private String apellido;
@@ -46,5 +46,10 @@ public class Jugador {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public int compareTo(Jugador o) {
+        return this.alias.compareTo(o.alias);
     }
 }

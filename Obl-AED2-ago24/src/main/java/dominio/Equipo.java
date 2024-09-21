@@ -1,6 +1,6 @@
 package dominio;
 
-public class Equipo {
+public class Equipo implements Comparable<Equipo> {
     private String nombre;
     private String manager;
 
@@ -25,5 +25,10 @@ public class Equipo {
 
     public void setManager(String manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public int compareTo(Equipo o) {
+        return this.nombre.compareTo(o.getNombre());
     }
 }

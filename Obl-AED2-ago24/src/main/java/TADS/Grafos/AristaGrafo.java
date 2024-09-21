@@ -1,28 +1,28 @@
 package TADS.Grafos;
 
 public class AristaGrafo<T extends Comparable<T>> {
-    private NodoGrafo<T> nodoInicio;
-    private  NodoGrafo<T> nodoFin;
+    private T nodoInicio;
+    private  T nodoFin;
     private int peso;
 
-    public AristaGrafo(NodoGrafo<T> nodoInicio, NodoGrafo<T> nodoFin) {
+    public AristaGrafo(T nodoInicio, T nodoFin) {
         this.nodoInicio = nodoInicio;
         this.nodoFin = nodoFin;
     }
 
-    public NodoGrafo<T> getNodoInicio() {
+    public T getNodoInicio() {
         return nodoInicio;
     }
 
-    public void setNodoInicio(NodoGrafo<T> nodoInicio) {
+    public void setNodoInicio(T nodoInicio) {
         this.nodoInicio = nodoInicio;
     }
 
-    public NodoGrafo<T> getNodoFin() {
+    public T getNodoFin() {
         return nodoFin;
     }
 
-    public void setNodoFin(NodoGrafo<T> nodoFin) {
+    public void setNodoFin(T nodoFin) {
         this.nodoFin = nodoFin;
     }
 

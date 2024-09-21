@@ -1,6 +1,6 @@
 package dominio;
 
-public class Sucursal {
+public class Sucursal implements Comparable<Sucursal> {
     private String codigo;
     private String nombre;
 
@@ -23,5 +23,10 @@ public class Sucursal {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @Override
+    public int compareTo(Sucursal o) {
+        return this.codigo.compareTo(o.getCodigo());
     }
 }
