@@ -1,6 +1,8 @@
 package TADS.Grafos;
 
-public class AristaGrafo<T extends Comparable<T>> {
+import dominio.Sucursal;
+
+public class AristaGrafo<T extends Comparable<T>> implements Comparable<AristaGrafo<T>> {
     private T nodoInicio;
     private  T nodoFin;
     private int peso;
@@ -32,5 +34,10 @@ public class AristaGrafo<T extends Comparable<T>> {
 
     public void setPeso(int peso) {
         this.peso = peso;
+    }
+
+    @Override
+    public int compareTo(AristaGrafo<T> o) {
+        return nodoInicio.compareTo(o.nodoInicio) + nodoFin.compareTo(o.nodoFin);
     }
 }

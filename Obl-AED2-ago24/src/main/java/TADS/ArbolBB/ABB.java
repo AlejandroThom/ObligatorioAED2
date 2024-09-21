@@ -45,7 +45,19 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
 
     @Override
     public T encontrar(T element) {
-        return null;
+        return encontrarREC(element,raiz);
+    }
+
+    private T encontrarREC(T element, NodoABB<T> nodo) {
+        if(nodo == null) return null;
+        if(nodo.getDato().equals(element)){
+            return nodo.getDato();
+        }
+        if(nodo.getDato().compareTo(element) < 0){
+            return encontrarREC(element,nodo.getHijoDerecho());
+        }else{
+            return encontrarREC(element,nodo.getHijoIzquierdo());
+        }
     }
 
     @Override

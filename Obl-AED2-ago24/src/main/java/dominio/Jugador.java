@@ -70,6 +70,12 @@ public class Jugador implements Comparable<Jugador> {
     }
 
     @Override
+    public boolean equals(Object obj) {
+       return obj instanceof Jugador && this.alias.equals(((Jugador)obj).alias);
+
+    }
+
+    @Override
     public int compareTo(Jugador o) {
         return this.alias.compareTo(o.alias);
     }

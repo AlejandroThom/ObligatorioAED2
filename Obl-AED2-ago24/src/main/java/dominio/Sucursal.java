@@ -1,8 +1,14 @@
 package dominio;
 
+import TADS.Grafos.Grafo;
+
+import java.util.List;
+
 public class Sucursal implements Comparable<Sucursal> {
     private String codigo;
     private String nombre;
+
+    private Grafo<Sucursal> conexiones;
 
     public  Sucursal(String codigo, String nombre) {
         this.codigo = codigo;
@@ -28,6 +34,11 @@ public class Sucursal implements Comparable<Sucursal> {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Sucursal && codigo.equals(((Sucursal) obj).codigo);
     }
 
     @Override
