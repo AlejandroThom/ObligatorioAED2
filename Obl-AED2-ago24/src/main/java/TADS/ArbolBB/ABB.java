@@ -73,7 +73,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
         if (nodo.getHijoIzquierdo() == null && nodo.getHijoDerecho() == null){
             return nodo.getDato().toString();
         }
-        return listarAscendenteREC(nodo.getHijoIzquierdo()) + listarAscendenteREC(nodo.getHijoDerecho()) + nodo.getDato().toString();
+        return listarAscendenteREC(nodo.getHijoIzquierdo()) + nodo.getDato().toString() + listarAscendenteREC(nodo.getHijoDerecho()) ;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
         if (nodo.getHijoIzquierdo() == null && nodo.getHijoDerecho() == null){
             return nodo.getDato().toString();
         }
-        return listarDescendenteREC(nodo.getHijoDerecho()) + listarDescendenteREC(nodo.getHijoIzquierdo()) +  nodo.getDato().toString();
+        return listarDescendenteREC(nodo.getHijoDerecho()) + nodo.getDato().toString() + listarDescendenteREC(nodo.getHijoIzquierdo());
     }
 
     @Override

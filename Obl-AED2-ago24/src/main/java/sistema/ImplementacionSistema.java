@@ -66,7 +66,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresAscendente() {
-        return Retorno.noImplementada();
+        return Retorno.ok(jugadores.listarAscendente());
     }
 
     @Override
