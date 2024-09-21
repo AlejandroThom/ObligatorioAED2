@@ -37,8 +37,20 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
-        return Retorno.noImplementada();
+        if(alias.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || categoria == null){
+            return Retorno.error1("Todos los parametros deben contar con un valor.");
+        }else if(buscarJugador(alias) != null){
+            return Retorno.error2("El jugador con alias " + alias + " ya existe en el sistema.");
+        }
+
+        Jugador nuevoJugador = new Jugador(alias, nombre, apellido, categoria);
+        jugadores.insertar(nuevoJugador);
+
+        agregarJuegadorACategoria(nuevoJugador);
+
+        return Retorno.ok();
     }
+
 
     @Override
     public Retorno buscarJugador(String alias) {
@@ -98,5 +110,16 @@ public class ImplementacionSistema implements Sistema {
     @Override
     public Retorno sucursalesParaTorneo(String codigoSucursalAnfitriona, int latenciaLimite) {
         return Retorno.noImplementada();
+    }
+
+    // -------------------------------------------------------------------------------------- Metodos auxiliares
+    private void agregarJuegadorACategoria(Jugador nuevoJugador) {
+        if(nuevoJugador.getCategoria().getIndice() == Categoria.PRINCIPIANTE.getIndice()){
+            jugadoresPrincipiantes.insertar(nuevoJugador);
+        }else if(nuevoJugador.getCategoria().getIndice() == Categoria.ESTANDARD.getIndice()){
+            jugadoresPrincipiantes.insertar(nuevoJugador);
+        }else{
+            jugadoresProfesionales.insertar(nuevoJugador);
+        }
     }
 }
