@@ -11,6 +11,10 @@ public class Equipo implements Comparable<Equipo> {
         this.manager = manager;
     }
 
+    public Equipo(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }

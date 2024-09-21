@@ -37,7 +37,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
-        if(alias.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || categoria == null){
+        if(nullOrEmpty(alias) || nullOrEmpty(nombre) || nullOrEmpty(apellido) || categoria == null){
             return Retorno.error1("Todos los parametros deben contar con un valor.");
         }else if(buscarJugador(alias) != null){
             return Retorno.error2("El jugador con alias " + alias + " ya existe en el sistema.");
@@ -53,7 +53,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno buscarJugador(String alias) {
-        if(alias == null || alias.isEmpty()){
+        if(nullOrEmpty(alias)){
             return Retorno.error1("Ingrese un alias valido :)");
         }
         Jugador jugador = jugadores.encontrar(new Jugador(alias));
@@ -86,8 +86,17 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarEquipo(String nombre, String manager) {
-        return Retorno.noImplementada();
+        if(nullOrEmpty(nombre) ||  nullOrEmpty(manager)){
+            return Retorno.error1("Ingrese un nombre y un manager valido");
+        }
+        Equipo equipo = buscarEquipo(nombre);
+        if(equipo != null){
+            return Retorno.error2("El equipo con el nombre " + nombre + " ya existe.");
+        }
+        this.equipos.insertar(new Equipo(nombre, manager));
+        return Retorno.ok();
     }
+
 
     @Override
     public Retorno agregarJugadorAEquipo(String nombreEquipo, String aliasJugador) {
@@ -138,5 +147,13 @@ public class ImplementacionSistema implements Sistema {
         }else{
             jugadoresProfesionales.insertar(nuevoJugador);
         }
+    }
+
+    private Equipo buscarEquipo(String nombre) {
+            return this.equipos.encontrar(new Equipo(nombre));
+    }
+
+    private boolean nullOrEmpty(String texto) {
+        return texto == null || texto.isEmpty();
     }
 }
