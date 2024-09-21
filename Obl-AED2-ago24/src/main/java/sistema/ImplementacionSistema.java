@@ -178,7 +178,7 @@ public class ImplementacionSistema implements Sistema {
         if(nuevoJugador.getCategoria().getIndice() == Categoria.PRINCIPIANTE.getIndice()){
             jugadoresPrincipiantes.insertar(nuevoJugador);
         }else if(nuevoJugador.getCategoria().getIndice() == Categoria.ESTANDARD.getIndice()){
-            jugadoresPrincipiantes.insertar(nuevoJugador);
+            jugadoresEstandar.insertar(nuevoJugador);
         }else{
             jugadoresProfesionales.insertar(nuevoJugador);
         }

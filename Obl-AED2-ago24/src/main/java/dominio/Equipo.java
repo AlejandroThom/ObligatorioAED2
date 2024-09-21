@@ -2,6 +2,7 @@ package dominio;
 
 import TADS.ArbolBB.ABB;
 
+@SuppressWarnings("unused")
 public class Equipo implements Comparable<Equipo> {
     private String nombre;
     private String manager;
@@ -14,7 +15,7 @@ public class Equipo implements Comparable<Equipo> {
         this.jugadores = new ABB<>();
     }
 
-    //Usado para busquedas
+    //Usado para búsquedas
     public Equipo(String nombre) {
         this.nombre = nombre;
     }
@@ -36,7 +37,7 @@ public class Equipo implements Comparable<Equipo> {
     }
 
 
-    // Metodos
+    // methods
     public int obtenerCantidadDeJugadores() {
         return this.jugadores.longitud();
     }
