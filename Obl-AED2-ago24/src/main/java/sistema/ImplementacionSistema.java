@@ -133,8 +133,14 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno listarJugadoresDeEquipo(String nombreEquipo) {
-
-        return Retorno.noImplementada();
+        if(nullOrEmpty(nombreEquipo)){
+            return Retorno.error1("Ingrese un nombre valido.");
+        }
+        Equipo equipo = buscarEquipo(nombreEquipo);
+        if(equipo == null){
+            return Retorno.error2("El equipo " + nombreEquipo + " no existe.");
+        }
+        return Retorno.ok(equipo.obtenerListadoDeJugadores());
     }
 
     @Override

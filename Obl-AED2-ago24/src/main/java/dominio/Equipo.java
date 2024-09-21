@@ -49,4 +49,8 @@ public class Equipo implements Comparable<Equipo> {
     public void agregarJugador(Jugador jugador) {
         jugadores.insertar(jugador);
     }
+
+    public String obtenerListadoDeJugadores() {
+        return jugadores.listarAscendente();
+    }
 }
