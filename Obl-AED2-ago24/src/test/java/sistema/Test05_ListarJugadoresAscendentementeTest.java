@@ -59,10 +59,6 @@ public class Test05_ListarJugadoresAscendentementeTest {
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.PROFESIONAL);
         assertEquals("El Quero;Querty;Quertares;Profesional|El QueroS;Querty;Quertares;Profesional",retorno.getValorString());
-
-
-
-
     }
 
 }
