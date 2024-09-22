@@ -10,7 +10,6 @@ public class Test01_InicializarSistemaTest {
     Retorno retorno;
 
 
-
     @Test
     void noDeberiaInicializarSistemaConMaxSucursalesMenorOIgualA3() {
         Sistema sistema = new ImplementacionSistema();

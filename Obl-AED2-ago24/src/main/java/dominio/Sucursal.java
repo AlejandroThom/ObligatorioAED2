@@ -1,14 +1,13 @@
 package dominio;
 
-import TADS.Grafos.Grafo;
-
-import java.util.List;
+import TADS.Grafos.AristaGrafo;
+import TADS.Lista.Lista;
 
 public class Sucursal implements Comparable<Sucursal> {
     private String codigo;
     private String nombre;
 
-    private Grafo<Sucursal> conexiones;
+    private Lista<AristaGrafo<Sucursal>> conexiones;
 
     public  Sucursal(String codigo, String nombre) {
         this.codigo = codigo;

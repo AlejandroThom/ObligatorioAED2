@@ -12,7 +12,7 @@ public class Jugador implements Comparable<Jugador> {
     private Equipo equipo;
 
 
-    public  Jugador(String nombre, String apellido, String alias, Categoria categoria) {
+    public  Jugador(String alias, String nombre, String apellido,Categoria categoria) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.alias = alias;

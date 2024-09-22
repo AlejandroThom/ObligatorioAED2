@@ -42,6 +42,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarJugador(String alias, String nombre, String apellido, Categoria categoria) {
+
         if(nullOrEmpty(alias) || nullOrEmpty(nombre) || nullOrEmpty(apellido) || categoria == null){
             return Retorno.error1("Todos los parametros deben contar con un valor.");
         }else if(obtenerJugador(alias) != null){
@@ -220,4 +221,17 @@ public class ImplementacionSistema implements Sistema {
     private boolean nullOrEmpty(String texto) {
         return texto == null || texto.isEmpty();
     }
+
+    public Retorno cantidadDeJugadores(){
+        return Retorno.ok(this.jugadores.longitud());
+    }
+
+    public Retorno cantidadSucursales(){
+        return Retorno.ok(this.sucursales.longitud());
+    }
+
+    public Retorno cantidadEquipos(){
+        return Retorno.ok(this.equipos.longitud());
+    }
+
 }
