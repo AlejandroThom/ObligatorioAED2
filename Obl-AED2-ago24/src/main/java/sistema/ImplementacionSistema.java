@@ -177,21 +177,75 @@ public class ImplementacionSistema implements Sistema {
     //TODO: Grafos
     @Override
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        return Retorno.noImplementada();
+        if(latencia < 0)
+            return  Retorno.error1("La latencia no puede ser menor a 0");
+        if(nullOrEmpty(codigoSucursal1) || nullOrEmpty(codigoSucursal2))
+            return Retorno.error2("Ingrese un codigo valido");
+
+        Sucursal suc1 = buscarSucursal(codigoSucursal1);
+        Sucursal suc2 = buscarSucursal(codigoSucursal2);
+
+        if(suc1 == null ){
+            return Retorno.error3("La sucursal con codigo " + codigoSucursal1 + " no existe.");
+        }else if(suc2 == null )
+            return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
+
+        if(suc1.tieneConexion(suc2))
+            return Retorno.error4("Las sucursales ya estan conectadas");
+
+        suc2.agregarConexion(suc1,latencia);
+        suc1.agregarConexion(suc2,latencia);
+        return Retorno.ok();
     }
 
     @Override
     public Retorno actualizarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
-        return Retorno.noImplementada();
+        if(latencia < 0)
+            return  Retorno.error1("La latencia no puede ser menor a 0");
+        if(nullOrEmpty(codigoSucursal1) || nullOrEmpty(codigoSucursal2))
+            return Retorno.error2("Ingrese un codigo valido");
+
+        Sucursal suc1 = buscarSucursal(codigoSucursal1);
+        Sucursal suc2 = buscarSucursal(codigoSucursal2);
+
+        if(suc1 == null ){
+            return Retorno.error3("La sucursal con codigo " + codigoSucursal1 + " no existe.");
+        }else if(suc2 == null )
+            return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
+
+        if(!suc1.tieneConexion(suc2))
+            return Retorno.error4("Las sucursales no estan conectadas");
+
+        suc1.actualizarConexion(suc2,latencia);
+        suc2.actualizarConexion(suc1,latencia);
+
+        return Retorno.ok();
     }
 
     @Override
     public Retorno analizarSucursal(String codigoSucursal) {
+        if(nullOrEmpty(codigoSucursal) )
+            return Retorno.error1("Ingrese un codigo valido");
+        Sucursal sucursal = buscarSucursal(codigoSucursal);
+        if(sucursal == null){
+            return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
+        }
+        //logica
         return Retorno.noImplementada();
     }
 
     @Override
     public Retorno sucursalesParaTorneo(String codigoSucursalAnfitriona, int latenciaLimite) {
+        if(nullOrEmpty(codigoSucursalAnfitriona) )
+            return Retorno.error1("Ingrese un codigo valido");
+        Sucursal sucursal = buscarSucursal(codigoSucursalAnfitriona);
+        if(sucursal == null){
+            return  Retorno.error2("La sucursal con codigo " + codigoSucursalAnfitriona + " no existe.");
+        }
+        if(latenciaLimite<=0){
+            return Retorno.error3("La latencia no puede ser menor o igual a 0");
+        }
+        //logica
         return Retorno.noImplementada();
     }
 
