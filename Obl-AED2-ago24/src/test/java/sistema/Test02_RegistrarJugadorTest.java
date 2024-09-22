@@ -21,6 +21,17 @@ public class Test02_RegistrarJugadorTest {
     }
 
     @Test
+    public void test_OK_RegistrarJugador() {
+        retorno = miSistema.registrarJugador("El Pepe","Pedro","Pedrales", Categoria.ESTANDARD);
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarJugador("El Rober","Roberto","Roblares", Categoria.PRINCIPIANTE);
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarJugador("El Quero","Querty","Quertares", Categoria.PROFESIONAL);
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        assertEquals(3,miSistema.cantidadDeJugadores().getValorInteger());
+    }
+
+    @Test
     public void test_Error01_RegistrarJugador() {
         retorno = miSistema.registrarJugador(null,"Pedro","Pedrales", Categoria.ESTANDARD);
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
@@ -46,14 +57,4 @@ public class Test02_RegistrarJugadorTest {
         assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
     }
 
-    @Test
-    public void test_OK_RegistrarJugador() {
-        retorno = miSistema.registrarJugador("El Pepe","Pedro","Pedrales", Categoria.ESTANDARD);
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        retorno = miSistema.registrarJugador("El Rober","Roberto","Roblares", Categoria.PRINCIPIANTE);
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        retorno = miSistema.registrarJugador("El Quero","Querty","Quertares", Categoria.PROFESIONAL);
-        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals(3,miSistema.cantidadDeJugadores().getValorInteger());
-    }
 }

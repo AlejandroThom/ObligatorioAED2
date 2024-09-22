@@ -19,7 +19,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
 
     private void insertarREC(NodoABB<T> nuevo,NodoABB<T> nodo) {
         if(nodo == null) return;
-        if(nodo.getDato().compareTo(nuevo.getDato()) > 0){
+        if(nuevo.getDato().compareTo(nodo.getDato()) <= 0){
             if(nodo.getHijoIzquierdo() != null)
                 insertarREC(nuevo,nodo.getHijoIzquierdo());
             else
@@ -27,7 +27,8 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
         }else {
             if(nodo.getHijoDerecho() != null)
                 insertarREC(nuevo,nodo.getHijoDerecho());
-            nodo.setHijoDerecho(nuevo);
+            else
+                nodo.setHijoDerecho(nuevo);
         }
     }
 

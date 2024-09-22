@@ -19,7 +19,7 @@ public class Test06_RegistrarEquipoTest {
     }
 
     @Test
-    public void test01_OK_RegistrarEquipo() {
+    public void test06_OK_RegistrarEquipo() {
         retorno = miSistema.registrarEquipo("Los magicos","El mago");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.registrarEquipo("Los mancos","El manco");
@@ -27,7 +27,7 @@ public class Test06_RegistrarEquipoTest {
     }
 
     @Test
-    public void test01_Error01_RegistrarEquipo() {
+    public void test06_Error01_RegistrarEquipo() {
         retorno = miSistema.registrarEquipo(null,"El mago");
         assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
         retorno = miSistema.registrarEquipo("","El mago");
@@ -39,7 +39,7 @@ public class Test06_RegistrarEquipoTest {
     }
 
     @Test
-    public void test01_Error02_RegistrarEquipo() {
+    public void test06_Error02_RegistrarEquipo() {
         retorno = miSistema.registrarEquipo("Los magicos","El mago");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.registrarEquipo("Los magicos","El mago");
