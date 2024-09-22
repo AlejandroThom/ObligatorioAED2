@@ -15,7 +15,21 @@ public class Lista<T extends Comparable<T>> implements ILista<T>{
         cantidad++;
     }
 
+    public NodoLista<T> getInicio() {
+        return inicio;
+    }
 
+    public void setInicio(NodoLista<T> inicio) {
+        this.inicio = inicio;
+    }
+
+    public NodoLista<T> getFin() {
+        return fin;
+    }
+
+    public void setFin(NodoLista<T> fin) {
+        this.fin = fin;
+    }
 
     @Override
     public void insertar(T elemento) {

@@ -3,10 +3,15 @@ package sistema;
 import TADS.ArbolBB.ABB;
 import TADS.Grafos.AristaGrafo;
 import TADS.Lista.Lista;
+import TADS.Lista.ListaConMaximo;
+import TADS.Lista.NodoLista;
 import dominio.Equipo;
 import dominio.Jugador;
 import dominio.Sucursal;
 import interfaz.*;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ImplementacionSistema implements Sistema {
 
@@ -15,9 +20,6 @@ public class ImplementacionSistema implements Sistema {
     private ABB<Sucursal> sucursales;
     private ABB<Equipo> equipos;
     private ABB<Jugador> jugadores;
-
-
-
 
     private ABB<Jugador> jugadoresPrincipiantes;
     private ABB<Jugador> jugadoresEstandar;
@@ -190,7 +192,8 @@ public class ImplementacionSistema implements Sistema {
         }else if(suc2 == null )
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
-        if(suc1.tieneConexion(suc2))
+        //PREGUNTAR A MICHEL SI SE TOMA EN CUENTA LA TRANSITIVIDAD( UN A ESTA CONECTADO A C PQ A -> B Y B -> C)
+        if(tieneConexion(suc1,suc2))
             return Retorno.error4("Las sucursales ya estan conectadas");
 
         suc2.agregarConexion(suc1,latencia);
@@ -213,7 +216,8 @@ public class ImplementacionSistema implements Sistema {
         }else if(suc2 == null )
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
-        if(!suc1.tieneConexion(suc2))
+        //PREGUNTAR A MICHEL SI SE TOMA EN CUENTA LA TRANSITIVIDAD( UN A ESTA CONECTADO A C PQ A -> B Y B -> C)
+        if(!tieneConexion(suc1,suc2))
             return Retorno.error4("Las sucursales no estan conectadas");
 
         suc1.actualizarConexion(suc2,latencia);
@@ -231,6 +235,9 @@ public class ImplementacionSistema implements Sistema {
             return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
         }
         //logica
+        //VERIFICAR QUE NO SEA HOJA
+            //BFS O DFS PARA SABER SI TODOS LAS SUCURSALES SIGUEN CONECTADAS
+        //SI ES HOJA NO PASA NADA :D
         return Retorno.noImplementada();
     }
 
@@ -246,10 +253,41 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error3("La latencia no puede ser menor o igual a 0");
         }
         //logica
+        //SE REALIZA UN BFS PARA AGREGAR A TODAS LAS SUCURSALES QUE ESTAN EN EL LIMITE
         return Retorno.noImplementada();
     }
 
     // -------------------------------------------------------------------------------------- Metodos auxiliares
+
+    private boolean tieneConexion(Sucursal sucursal1, Sucursal sucursal2) {
+        //TODO: REALIZAR TAD COLA
+        //SE REALIZA BFS PARA VERIFICAR SI NO SE ESTA CONECTADO POR TRANSITIVIDAD.
+        Queue<Sucursal> cola = new LinkedList<>();
+
+        ListaConMaximo<String> visitados = new ListaConMaximo<>(maxSucursacles);
+
+        boolean encontrado = false;
+        cola.add(sucursal1);
+
+        while (!cola.isEmpty() && !encontrado) {
+            Sucursal suc = cola.poll();
+            if(!visitados.estaElemento(suc.getCodigo())){
+                visitados.insertar(suc.getCodigo());
+                if(suc.equals(sucursal2)){
+                    encontrado = true;
+                }else{
+                    NodoLista<AristaGrafo<Sucursal>> actual = suc.getConexiones().getInicio();
+                    while(actual != null){
+                        cola.add(actual.getElemento().getNodoConexion());
+                        actual = actual.getSiguiente();
+                    }
+                }
+            }
+        }
+        return encontrado;
+    }
+
+
     private void agregarJuegadorACategoria(Jugador nuevoJugador) {
         if(nuevoJugador.getCategoria().getIndice() == Categoria.PRINCIPIANTE.getIndice()){
             jugadoresPrincipiantes.insertar(nuevoJugador);

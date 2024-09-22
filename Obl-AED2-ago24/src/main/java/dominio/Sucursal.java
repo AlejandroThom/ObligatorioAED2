@@ -2,6 +2,10 @@ package dominio;
 
 import TADS.Grafos.AristaGrafo;
 import TADS.Lista.Lista;
+import TADS.Lista.NodoLista;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Sucursal implements Comparable<Sucursal> {
     private String codigo;
@@ -12,6 +16,10 @@ public class Sucursal implements Comparable<Sucursal> {
     public  Sucursal(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
+    }
+
+    public Lista<AristaGrafo<Sucursal>> getConexiones() {
+        return conexiones;
     }
 
     //Usado para búsquedas
@@ -33,10 +41,6 @@ public class Sucursal implements Comparable<Sucursal> {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
-    }
-
-    public boolean tieneConexion(Sucursal sucursal){
-        return this.conexiones.estaElemento(new AristaGrafo<>(sucursal));
     }
 
     public void agregarConexion(Sucursal sucursal, int peso){

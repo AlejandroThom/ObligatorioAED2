@@ -11,6 +11,10 @@ public class AristaGrafo<T extends Comparable<T>> implements Comparable<AristaGr
         this.peso = peso;
     }
 
+    public T getNodoConexion() {
+        return nodoConexion;
+    }
+
     //constructor para busquedas
     public AristaGrafo(T nodoConexion) {
         this.nodoConexion = nodoConexion;
