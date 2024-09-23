@@ -1,15 +1,13 @@
 package sistema;
 
-import dominio.Jugador;
 import interfaz.Categoria;
 import interfaz.Retorno;
-import interfaz.Sistema;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Test02_RegistrarJugadorTest {
+public class TestCase02RegistrarJugador {
     private ImplementacionSistema miSistema;
     Retorno retorno;
 

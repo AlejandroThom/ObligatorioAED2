@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Test01_InicializarSistemaTest {
+public class TestCase01InicializarSistema {
     Retorno retorno;
 
 

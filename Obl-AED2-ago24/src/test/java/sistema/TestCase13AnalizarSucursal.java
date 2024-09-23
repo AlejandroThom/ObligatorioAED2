@@ -3,7 +3,7 @@ package sistema;
 import interfaz.Retorno;
 import org.junit.Before;
 
-public class Test14_SucursalesParaTorneoTest {
+public class TestCase13AnalizarSucursal {
     private ImplementacionSistema miSistema;
     Retorno retorno;
 

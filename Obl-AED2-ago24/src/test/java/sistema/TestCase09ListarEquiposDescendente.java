@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class Test09_ListarEquiposDescendenteTest {
+public class TestCase09ListarEquiposDescendente {
     private ImplementacionSistema miSistema;
     Retorno retorno;
 

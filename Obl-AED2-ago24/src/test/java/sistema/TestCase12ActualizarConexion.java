@@ -3,7 +3,7 @@ package sistema;
 import interfaz.Retorno;
 import org.junit.Before;
 
-public class Test10_RegistrarSucursalTest {
+public class TestCase12ActualizarConexion {
     private ImplementacionSistema miSistema;
     Retorno retorno;
 
