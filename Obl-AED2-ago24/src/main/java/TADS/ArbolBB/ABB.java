@@ -80,7 +80,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
     public String listarAscendente() {
         String lista = listarAscendenteREC(this.raiz);
 
-        if(lista.length() == 0){
+        if(lista.isEmpty()){
             return lista;
         }
         return lista.substring(0,lista.length()-1);
@@ -97,6 +97,11 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
     @Override
     public String listarDescendente() {
         String lista = listarDescendenteREC(this.raiz);
+
+        if(lista.isEmpty()){
+            return lista;
+        }
+
         return lista.substring(0,lista.length()-1);
     }
 
@@ -105,7 +110,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
         if (nodo.getHijoIzquierdo() == null && nodo.getHijoDerecho() == null){
             return nodo.getDato().toString() + "|";
         }
-        return listarDescendenteREC(nodo.getHijoDerecho()) + nodo.getDato().toString() + listarDescendenteREC(nodo.getHijoIzquierdo());
+        return listarDescendenteREC(nodo.getHijoDerecho()) + nodo.getDato().toString() + "|" + listarDescendenteREC(nodo.getHijoIzquierdo());
     }
 
     @Override
