@@ -1,8 +1,7 @@
 package sistema;
 
 import TADS.ArbolBB.ABB;
-import TADS.Grafos.AristaGrafo;
-import TADS.Lista.Lista;
+import TADS.Grafo.AristaGrafo;
 import TADS.Lista.ListaConMaximo;
 import TADS.Lista.NodoLista;
 import dominio.Equipo;

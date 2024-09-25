@@ -1,11 +1,7 @@
 package dominio;
 
-import TADS.Grafos.AristaGrafo;
+import TADS.Grafo.AristaGrafo;
 import TADS.Lista.Lista;
-import TADS.Lista.NodoLista;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Sucursal implements Comparable<Sucursal> {
     private String codigo;

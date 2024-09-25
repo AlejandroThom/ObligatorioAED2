@@ -1,6 +1,4 @@
-package TADS.Grafos;
-
-import dominio.Sucursal;
+package TADS.Grafo;
 
 public class AristaGrafo<T extends Comparable<T>> implements Comparable<AristaGrafo<T>> {
     private  T nodoConexion;
