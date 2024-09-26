@@ -2,6 +2,7 @@ package sistema;
 
 import TADS.ArbolBB.ABB;
 import TADS.Grafo.AristaGrafo;
+import TADS.Grafo.Grafo;
 import TADS.Lista.ListaConMaximo;
 import TADS.Lista.NodoLista;
 import dominio.Equipo;
@@ -16,7 +17,7 @@ public class ImplementacionSistema implements Sistema {
 
     private int maxSucursacles;
 
-    private ABB<Sucursal> sucursales;
+    private Grafo<Sucursal> sucursales;
     private ABB<Equipo> equipos;
     private ABB<Jugador> jugadores;
 
@@ -31,7 +32,7 @@ public class ImplementacionSistema implements Sistema {
         }
         this.maxSucursacles = maxSucursales;
 
-        this.sucursales = new ABB<>();
+        this.sucursales = new Grafo<>(maxSucursales,false);
         this.equipos = new ABB<>();
         this.jugadores = new ABB<>();
 
@@ -157,7 +158,7 @@ public class ImplementacionSistema implements Sistema {
 
     @Override
     public Retorno registrarSucursal(String codigo, String nombre) {
-        if(sucursales.longitud() >= maxSucursacles){
+        if(sucursales.getCantidadActualVertices() >= maxSucursacles){
             return Retorno.error1("No se pueden registrar mas de " + maxSucursacles + " sucursales.");
         }
         if(nullOrEmpty(nombre) || nullOrEmpty(codigo)){
@@ -168,7 +169,7 @@ public class ImplementacionSistema implements Sistema {
         }
 
         Sucursal nuevaSucursal = new Sucursal(codigo, nombre);
-        sucursales.insertar(nuevaSucursal);
+        sucursales.agregarVertice(nuevaSucursal);
 
         return Retorno.ok();
     }
@@ -191,12 +192,9 @@ public class ImplementacionSistema implements Sistema {
         }else if(suc2 == null )
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
-        //PREGUNTAR A MICHEL SI SE TOMA EN CUENTA LA TRANSITIVIDAD( UN A ESTA CONECTADO A C PQ A -> B Y B -> C)
-        if(tieneConexion(suc1,suc2))
+        if(sucursales.sonAdyacentes(suc1,suc2))
             return Retorno.error4("Las sucursales ya estan conectadas");
 
-        suc2.agregarConexion(suc1,latencia);
-        suc1.agregarConexion(suc2,latencia);
         return Retorno.ok();
     }
 
@@ -216,11 +214,10 @@ public class ImplementacionSistema implements Sistema {
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
         //PREGUNTAR A MICHEL SI SE TOMA EN CUENTA LA TRANSITIVIDAD( UN A ESTA CONECTADO A C PQ A -> B Y B -> C)
-        if(!tieneConexion(suc1,suc2))
+        if(!sucursales.sonAdyacentes(suc1,suc2))
             return Retorno.error4("Las sucursales no estan conectadas");
 
-        suc1.actualizarConexion(suc2,latencia);
-        suc2.actualizarConexion(suc1,latencia);
+        sucursales.agregarArista(suc1,suc2,latencia);
 
         return Retorno.ok();
     }
@@ -233,11 +230,7 @@ public class ImplementacionSistema implements Sistema {
         if(sucursal == null){
             return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
         }
-        //logica
-        //VERIFICAR QUE NO SEA HOJA
-            //BFS O DFS PARA SABER SI TODOS LAS SUCURSALES SIGUEN CONECTADAS
-        //SI ES HOJA NO PASA NADA :D
-        return Retorno.noImplementada();
+        return sucursales.aristaEsCritica(sucursal) ? Retorno.ok("SI") : Retorno.ok("No");
     }
 
     @Override
@@ -258,35 +251,6 @@ public class ImplementacionSistema implements Sistema {
 
     // -------------------------------------------------------------------------------------- Metodos auxiliares
 
-    private boolean tieneConexion(Sucursal sucursal1, Sucursal sucursal2) {
-        //TODO: REALIZAR TAD COLA
-        //SE REALIZA BFS PARA VERIFICAR SI NO SE ESTA CONECTADO POR TRANSITIVIDAD.
-        Queue<Sucursal> cola = new LinkedList<>();
-
-        ListaConMaximo<String> visitados = new ListaConMaximo<>(maxSucursacles);
-
-        boolean encontrado = false;
-        cola.add(sucursal1);
-
-        while (!cola.isEmpty() && !encontrado) {
-            Sucursal suc = cola.poll();
-            if(!visitados.estaElemento(suc.getCodigo())){
-                visitados.insertar(suc.getCodigo());
-                if(suc.equals(sucursal2)){
-                    encontrado = true;
-                }else{
-                    NodoLista<AristaGrafo<Sucursal>> actual = suc.getConexiones().getInicio();
-                    while(actual != null){
-                        cola.add(actual.getElemento().getNodoConexion());
-                        actual = actual.getSiguiente();
-                    }
-                }
-            }
-        }
-        return encontrado;
-    }
-
-
     private void agregarJuegadorACategoria(Jugador nuevoJugador) {
         if(nuevoJugador.getCategoria().getIndice() == Categoria.PRINCIPIANTE.getIndice()){
             jugadoresPrincipiantes.insertar(nuevoJugador);
@@ -306,7 +270,7 @@ public class ImplementacionSistema implements Sistema {
     }
 
     private Sucursal buscarSucursal(String codigo) {
-        return sucursales.encontrar(new Sucursal(codigo));
+        return sucursales.obtenerVertice(new Sucursal(codigo));
     }
 
     private boolean nullOrEmpty(String texto) {
@@ -318,7 +282,7 @@ public class ImplementacionSistema implements Sistema {
     }
 
     public Retorno cantidadSucursales(){
-        return Retorno.ok(this.sucursales.longitud());
+        return Retorno.ok(this.sucursales.getCantidadActualVertices());
     }
 
     public Retorno cantidadEquipos(){

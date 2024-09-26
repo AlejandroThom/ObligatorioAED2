@@ -1,6 +1,6 @@
 package TADS.Grafo;
 
-public class Arista {
+public class Arista implements Comparable<Arista> {
     private int peso;
     private boolean existe;
 
@@ -28,5 +28,16 @@ public class Arista {
     public Arista() {
         this.peso = 0;
         this.existe = false;
+    }
+
+
+    @Override
+    public int compareTo(Arista o) {
+        if(this.peso < o.peso){
+            return -1;
+        }else if(this.peso > o.peso){
+            return 1;
+        }
+        return 0;
     }
 }

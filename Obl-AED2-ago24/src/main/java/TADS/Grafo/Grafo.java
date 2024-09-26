@@ -1,6 +1,8 @@
 package TADS.Grafo;
 
+import TADS.Cola.PriorityQueue;
 import TADS.Lista.Lista;
+import TADS.Pair.Pair;
 
 public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     //Atributos
@@ -173,6 +175,50 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     public boolean existeVertice(T v) {
         return buscarPosicionVertice(v) != -1;
     }
+
+    @Override
+    public T obtenerVertice(T v) {
+        int pos = buscarPosicionVertice(v);
+        return pos == -1 ? null: this.vertices[pos];
+    }
+
+    @Override
+    public boolean aristaEsCritica(T a) {
+        return false;
+    }
+
+    @Override
+    public Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax) {
+        int pos = buscarPosicionVertice(inicio);
+        boolean[] visitados = new boolean[this.cantidadMaximaVertices];
+        Lista<T> sucursalesObtenidas = new Lista<>();
+        //NECESITO AL HIJO posicion Y AL ESPIRITU SANTO(EL PESO ACUMULADO) EN LA COLA DE PRIORIDAD
+        //AL INICIO EL HIJO ES EL INICIO(DONDE PARTO) Y EL PADRE -1 POR LO TANTO EL PESO ACUMULADO VA A SER 0
+        PriorityQueue<Pair<Integer,Integer>> cola = new PriorityQueue<>();
+        cola.encolar(new Pair<>(pos,0));
+        while(!cola.estaVacia()){
+            //OBTENGO EL DATO DEL OBJETO QUE TIENE AL PADRE AL HIJO Y AL PESO
+            Pair<Integer,Integer> par = cola.desencolar();
+            if(!visitados[par.getFirst()]){
+                //MARCO COMO VISITADO
+                visitados[par.getFirst()] = true;
+                //AGREGO A SUS 'HIJOS' A LA COLA
+                for(int i = 0; i < this.cantidadMaximaVertices; i++){
+                    Arista ar = matrizAdyacente[par.getFirst()][i];
+                    if(ar.isExiste()){
+                        Pair<Integer,Integer> nuevo = new Pair<>(i,ar.getPeso()+par.getSecond());
+                    }
+                }
+                // SI EL PESO ACUMULADO ACTUAL <= pesoMax se agrega a la lista
+                if(par.getSecond() <= pesoMax){
+                    sucursalesObtenidas.insertarOrdenado(vertices[par.getFirst()]);
+                }
+            }
+        }
+        return sucursalesObtenidas;
+    }
+
+
 
     private int buscarPosicionVertice(T origen) {
         int pos = -1;

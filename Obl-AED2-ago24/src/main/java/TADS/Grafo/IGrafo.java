@@ -12,5 +12,8 @@ public interface IGrafo<T extends Comparable<T>> {
     Lista<T> verticesAdyacentes(T v);
     boolean sonAdyacentes(T a, T b);
     boolean existeVertice (T v);
+    T obtenerVertice (T v);
+    boolean aristaEsCritica(T arista);
+    Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax);
 
 }
