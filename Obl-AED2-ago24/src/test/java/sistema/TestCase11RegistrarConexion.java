@@ -38,4 +38,45 @@ public class TestCase11RegistrarConexion {
         retorno = miSistema.cantidadConexiones();
         assertEquals(8, retorno.getValorInteger());
     }
+
+    @Test
+    public void TestCase11RegistrarSucursal_TestError1() {
+        retorno = miSistema.registrarSucursal("UYU-MVD-01","La Montevideana");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarSucursal("PER-LIM-01","La Picante");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = miSistema.registrarConexion("UYU-MVD-01","PER-LIM-01",-1);
+        assertEquals(Retorno.Resultado.ERROR_1, retorno.getResultado());
+    }
+
+    @Test
+    public void TestCase11RegistrarSucursal_TestError2() {
+        retorno = miSistema.registrarSucursal("UYU-MVD-01","La Montevideana");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarSucursal("PER-LIM-01","La Picante");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = miSistema.registrarConexion(null,"PER-LIM-01",13);
+        assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
+        retorno = miSistema.registrarConexion("","PER-LIM-01",13);
+        assertEquals(Retorno.Resultado.ERROR_2, retorno.getResultado());
+    }
+
+    @Test
+    public void TestCase11RegistrarSucursal_TestError3() {
+        retorno = miSistema.registrarSucursal("UYU-MVD-01","La Montevideana");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarSucursal("PER-LIM-01","La Picante");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
+        retorno = miSistema.registrarConexion("UYU-MVD-01","PER-LIM-01",13);
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        //Directa
+        retorno = miSistema.registrarConexion("UYU-MVD-01","PER-LIM-01",13);
+        assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
+        //Invertida
+        retorno = miSistema.registrarConexion("PER-LIM-01","UYU-MVD-01",13);
+        assertEquals(Retorno.Resultado.ERROR_4, retorno.getResultado());
+    }
 }
