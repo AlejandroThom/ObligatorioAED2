@@ -8,8 +8,12 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     //Atributos
     private int cantidadMaximaVertices;
     private int cantidadActualVertices;
-
+    private int cantidadAristas;
     private boolean esDirigido;
+
+    public int getCantidadAristas(){
+        return cantidadAristas;
+    }
 
     private T[] vertices;
     private Arista[][] matrizAdyacente;
@@ -20,7 +24,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.esDirigido = true;
         this.cantidadActualVertices = 0;
 
-        this.vertices = (T[]) new Object[cantidadMaximaVertices];
+        this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
     }
 
@@ -29,7 +33,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.esDirigido = esDirigido;
         this.cantidadActualVertices = 0;
 
-        this.vertices = (T[]) new Object[cantidadMaximaVertices];
+        this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
     }
 
@@ -107,10 +111,11 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
 
         this.matrizAdyacente[iOrigen][iDestino].setPeso(peso);
         this.matrizAdyacente[iOrigen][iDestino].setExiste(true);
-
+        cantidadAristas++;
         if(!this.esDirigido){
             this.matrizAdyacente[iDestino][iOrigen].setPeso(peso); //A chequear, si alias funca no va
             this.matrizAdyacente[iDestino][iOrigen].setExiste(true); //A chequear, si alias funca no va
+            cantidadAristas++;
         }
     }
 
@@ -221,10 +226,13 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
 
 
     private int buscarPosicionVertice(T origen) {
+        if(this.cantidadActualVertices == 0){
+            return -1;
+        }
         int pos = -1;
         int i = 0;
         while(pos == -1 && i < this.cantidadMaximaVertices) {
-            if(this.vertices[i].equals(origen)) {
+            if(this.vertices[i] != null && this.vertices[i].equals(origen)) {
                 pos = i;
             }
             i++;

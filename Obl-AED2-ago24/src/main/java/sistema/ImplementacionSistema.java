@@ -195,6 +195,8 @@ public class ImplementacionSistema implements Sistema {
         if(sucursales.sonAdyacentes(suc1,suc2))
             return Retorno.error4("Las sucursales ya estan conectadas");
 
+        sucursales.agregarArista(suc1,suc2,latencia);
+
         return Retorno.ok();
     }
 
@@ -288,5 +290,9 @@ public class ImplementacionSistema implements Sistema {
     public Retorno cantidadEquipos(){
         return Retorno.ok(this.equipos.longitud());
     }
+    public Retorno cantidadConexiones(){
+        return Retorno.ok(this.sucursales.getCantidadAristas());
+    }
+
 
 }
