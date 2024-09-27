@@ -232,7 +232,7 @@ public class ImplementacionSistema implements Sistema {
         if(sucursal == null){
             return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
         }
-        return sucursales.aristaEsCritica(sucursal) ? Retorno.ok("SI") : Retorno.ok("No");
+        return sucursales.verticeEsCritico(sucursal) ? Retorno.ok("SI") : Retorno.ok("No");
     }
 
     @Override

@@ -2,6 +2,7 @@ package TADS.Grafo;
 
 import TADS.Cola.PriorityQueue;
 import TADS.Lista.Lista;
+import TADS.Lista.NodoLista;
 import TADS.Pair.Pair;
 
 public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
@@ -10,6 +11,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     private int cantidadActualVertices;
     private int cantidadAristas;
     private boolean esDirigido;
+    private Lista<T> verticesCriticos;
 
     public int getCantidadAristas(){
         return cantidadAristas;
@@ -23,7 +25,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.cantidadMaximaVertices = cantidadMaximaVertices;
         this.esDirigido = true;
         this.cantidadActualVertices = 0;
-
+        this.verticesCriticos = new Lista<>();
         this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
     }
@@ -117,6 +119,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
             this.matrizAdyacente[iDestino][iOrigen].setExiste(true); //A chequear, si alias funca no va
             cantidadAristas++;
         }
+        actualizarVerticesCriticos();
     }
 
 
@@ -133,6 +136,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
             this.matrizAdyacente[iVertice][i] = new Arista();
             this.matrizAdyacente[i][iVertice] = new Arista();
         }
+        actualizarVerticesCriticos();
     }
 
     @Override
@@ -144,6 +148,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         if(!this.esDirigido){
             this.matrizAdyacente[iDestino][iOrigen] = new Arista();
         }
+        actualizarVerticesCriticos();
     }
 
     @Override
@@ -188,8 +193,52 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     }
 
     @Override
-    public boolean aristaEsCritica(T a) {
-        return false;
+    public void actualizarVerticesCriticos() {
+        this.verticesCriticos = new Lista<>();
+        boolean[] visitados = new boolean[this.cantidadMaximaVertices];
+        int[] time = new int[this.cantidadMaximaVertices];
+        int[] low = new int[this.cantidadMaximaVertices];
+        // voy por todos los nodos por si es convexo
+        for(int i = 0; i < this.cantidadMaximaVertices; i++){
+            if(this.vertices[i] != null && !visitados[i]){
+                dfsVerticesCriticos(verticesCriticos,i,-1,visitados,time,low,1);
+            }
+        }
+    }
+
+    private void dfsVerticesCriticos(Lista<T> verticesCriticos, int verticePos,int posPadre,boolean[] visitados,int[] time,int[] low,int currentTime){
+        //Marco como visitado
+        visitados[verticePos] = true;
+        //instancio los hijos visitados
+        int children = 0;
+        //marco el tiempo y lo más bajo que puede llegar
+        time[verticePos] = currentTime;
+        low[verticePos] = currentTime;
+        for(int i = 0; i < matrizAdyacente[verticePos].length; i++){
+            //Verifico que esten conectados y si lo están que no este visitado
+            if(matrizAdyacente[verticePos][i].isExiste() && !visitados[i]){
+                //aumento la cantidad de hijos visitados
+                children++;
+                //voy por cada hijo del nodo
+                dfsVerticesCriticos(verticesCriticos,i, verticePos,visitados,time,low,currentTime+1);
+                // marco cual es el nodo más joven en ser descubierto al que puedo llegar
+                //a travez de mis hijos
+                low[verticePos] = Math.min(low[verticePos], low[i]);
+                //si el nodo más joven al que puede llegar mi hijo es mayor o igual a mi
+                //soy un nodo de articulación
+                if(low[i] >= time[verticePos] && posPadre != -1){
+                    verticesCriticos.insertar(this.vertices[verticePos]);
+                }
+            }else if(matrizAdyacente[verticePos][i].isExiste() && i != posPadre){
+                //Si el nodo al que visito es distinto a de mi padre
+                // y fue descubierto antes que yo mismo , puedo llegar a un nodo más joven
+                low[verticePos] = Math.min(low[verticePos], time[i]);
+            }
+        }
+        // si el nodo 'raiz' tiene más de un hijo visitado entonces el nodo raiz es una articulación(es critico)
+        if(posPadre == -1 && children > 1){
+            verticesCriticos.insertar(this.vertices[verticePos]);
+        }
     }
 
     @Override
@@ -223,6 +272,10 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         return sucursalesObtenidas;
     }
 
+    @Override
+    public boolean verticeEsCritico(T dato) {
+        return this.verticesCriticos.estaElemento(dato);
+    }
 
 
     private int buscarPosicionVertice(T origen) {

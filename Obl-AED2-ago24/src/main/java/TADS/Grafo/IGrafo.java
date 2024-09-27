@@ -13,7 +13,8 @@ public interface IGrafo<T extends Comparable<T>> {
     boolean sonAdyacentes(T a, T b);
     boolean existeVertice (T v);
     T obtenerVertice (T v);
-    boolean aristaEsCritica(T arista);
+    void actualizarVerticesCriticos();
     Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax);
+    boolean verticeEsCritico(T dato);
 
 }
