@@ -2,7 +2,6 @@ package TADS.Grafo;
 
 import TADS.Cola.PriorityQueue;
 import TADS.Lista.Lista;
-import TADS.Lista.NodoLista;
 import TADS.Pair.Pair;
 
 public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
@@ -198,7 +197,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
         int[] time = new int[this.cantidadMaximaVertices];
         int[] low = new int[this.cantidadMaximaVertices];
-        // voy por todos los nodos por si es convexo
+        // voy por todos los nodos por si es no convexo
         for(int i = 0; i < this.cantidadMaximaVertices; i++){
             if(this.vertices[i] != null && !visitados[i]){
                 dfsVerticesCriticos(verticesCriticos,i,-1,visitados,time,low,1);
