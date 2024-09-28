@@ -4,6 +4,8 @@ import TADS.Grafo.AristaGrafo;
 import TADS.Lista.Lista;
 
 public class Sucursal implements Comparable<Sucursal> {
+
+    //<editor-fold defaultstate="collapsed" desc="Attributes">
     private String codigo;
     private String nombre;
 
@@ -13,6 +15,7 @@ public class Sucursal implements Comparable<Sucursal> {
         this.codigo = codigo;
         this.nombre = nombre;
     }
+    // </editor-fold>
 
     public Lista<AristaGrafo<Sucursal>> getConexiones() {
         return conexiones;
