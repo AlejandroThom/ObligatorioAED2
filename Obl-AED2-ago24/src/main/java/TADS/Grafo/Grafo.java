@@ -121,6 +121,17 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         actualizarVerticesCriticos();
     }
 
+    @Override
+    public void actualizarArista(T origen, T destino, int peso) {
+        int iOrigen = buscarPosicionVertice(origen);
+        int iDestino = buscarPosicionVertice(destino);
+
+        this.matrizAdyacente[iOrigen][iDestino].setPeso(peso);
+        if(!this.esDirigido){
+            this.matrizAdyacente[iDestino][iOrigen].setPeso(peso); //A chequear, si alias funca no va
+        }
+    }
+
 
     @Override
     public void borrarVertice(T v) {
@@ -260,6 +271,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                     Arista ar = matrizAdyacente[par.getFirst()][i];
                     if(ar.isExiste()){
                         Pair<Integer,Integer> nuevo = new Pair<>(i,ar.getPeso()+par.getSecond());
+                        cola.encolar(nuevo);
                     }
                 }
                 // SI EL PESO ACUMULADO ACTUAL <= pesoMax se agrega a la lista
@@ -275,7 +287,6 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     public boolean verticeEsCritico(T dato) {
         return this.verticesCriticos.estaElemento(dato);
     }
-
 
     private int buscarPosicionVertice(T origen) {
         if(this.cantidadActualVertices == 0){

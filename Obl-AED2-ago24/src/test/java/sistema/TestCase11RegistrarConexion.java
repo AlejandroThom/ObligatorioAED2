@@ -70,6 +70,17 @@ public class TestCase11RegistrarConexion {
         retorno = miSistema.registrarSucursal("PER-LIM-01","La Picante");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
 
+        retorno = miSistema.registrarConexion("UYU-MVD-02","PER-LIM-01",13);
+        assertEquals(Retorno.Resultado.ERROR_3, retorno.getResultado());
+    }
+
+    @Test
+    public void TestCase11RegistrarSucursal_TestError4() {
+        retorno = miSistema.registrarSucursal("UYU-MVD-01","La Montevideana");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+        retorno = miSistema.registrarSucursal("PER-LIM-01","La Picante");
+        assertEquals(Retorno.Resultado.OK, retorno.getResultado());
+
         retorno = miSistema.registrarConexion("UYU-MVD-01","PER-LIM-01",13);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         //Directa

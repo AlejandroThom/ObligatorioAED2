@@ -98,7 +98,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T>{
             sb.append(actual.getElemento().toString()).append("|");
             actual = actual.getSiguiente();
         }
-        return sb.toString();
+        return sb.substring(0, sb.length() - 1);
     }
 
     @Override

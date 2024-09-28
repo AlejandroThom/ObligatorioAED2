@@ -41,7 +41,10 @@ public class PriorityQueue<T extends Comparable<T>> implements ICola<T> {
     public T desencolar() {
         T devolver = frente.getDato();
         frente = frente.getSiguiente();
-        frente.setAnterior(null);
+        if(frente != null){
+            frente.setAnterior(null);
+        }
+        cantidadElementos--;
         return devolver;
     }
 

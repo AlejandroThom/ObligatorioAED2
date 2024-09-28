@@ -174,9 +174,6 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok();
     }
 
-
-
-    //TODO: Grafos
     @Override
     public Retorno registrarConexion(String codigoSucursal1, String codigoSucursal2, int latencia) {
         if(latencia < 0)
@@ -219,7 +216,7 @@ public class ImplementacionSistema implements Sistema {
         if(!sucursales.sonAdyacentes(suc1,suc2))
             return Retorno.error4("Las sucursales no estan conectadas");
 
-        sucursales.agregarArista(suc1,suc2,latencia);
+        sucursales.actualizarArista(suc1,suc2,latencia);
 
         return Retorno.ok();
     }
@@ -248,7 +245,7 @@ public class ImplementacionSistema implements Sistema {
         }
         //logica
         //SE REALIZA UN BFS PARA AGREGAR A TODAS LAS SUCURSALES QUE ESTAN EN EL LIMITE
-        return Retorno.noImplementada();
+        return Retorno.ok(sucursales.aristasConectadasAConMenosPesoA(sucursal,latenciaLimite).mostrar());
     }
 
     // -------------------------------------------------------------------------------------- Metodos auxiliares

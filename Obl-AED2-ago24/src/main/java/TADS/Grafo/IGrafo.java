@@ -16,5 +16,6 @@ public interface IGrafo<T extends Comparable<T>> {
     void actualizarVerticesCriticos();
     Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax);
     boolean verticeEsCritico(T dato);
+    void actualizarArista(T origen, T destino, int peso);
 
 }
