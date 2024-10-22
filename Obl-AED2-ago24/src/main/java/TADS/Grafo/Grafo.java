@@ -269,7 +269,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                 //AGREGO A SUS 'HIJOS' A LA COLA
                 for(int i = 0; i < this.cantidadMaximaVertices; i++){
                     Arista ar = matrizAdyacente[par.getFirst()][i];
-                    if(ar.isExiste()){
+                    if(ar.isExiste() && ar.getPeso()+par.getSecond()<=pesoMax){
                         Pair<Integer,Integer> nuevo = new Pair<>(i,ar.getPeso()+par.getSecond());
                         cola.encolar(nuevo);
                     }
