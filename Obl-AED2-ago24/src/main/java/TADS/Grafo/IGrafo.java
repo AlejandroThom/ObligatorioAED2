@@ -1,6 +1,7 @@
 package TADS.Grafo;
 
 import TADS.Lista.Lista;
+import TADS.Pair.Pair;
 
 public interface IGrafo<T extends Comparable<T>> {
 //    void crearGrafoVacio(int cantMaxDeVertices);
@@ -14,8 +15,11 @@ public interface IGrafo<T extends Comparable<T>> {
     boolean existeVertice (T v);
     T obtenerVertice (T v);
     void actualizarVerticesCriticos();
-    Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax);
+    Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(T inicio, int pesoMax);
     boolean verticeEsCritico(T dato);
     void actualizarArista(T origen, T destino, int peso);
+    int buscarPosicionVertice(T origen);
+    boolean sonAdyacentes(int origen, int destino);
+    void actualizarArista(int origen,int destino, int peso);
 
 }

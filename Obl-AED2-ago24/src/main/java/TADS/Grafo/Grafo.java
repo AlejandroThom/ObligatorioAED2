@@ -132,6 +132,14 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         }
     }
 
+    @Override
+    public void actualizarArista(int origen,int destino, int peso) {
+        this.matrizAdyacente[origen][destino].setPeso(peso);
+        if(!this.esDirigido){
+            this.matrizAdyacente[destino][origen].setPeso(peso);
+        }
+    }
+
 
     @Override
     public void borrarVertice(T v) {
@@ -189,6 +197,11 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         int iOrigen = buscarPosicionVertice(origen);
         int iDestino = buscarPosicionVertice(destino);
         return this.matrizAdyacente[iOrigen][iDestino].isExiste();
+    }
+
+    @Override
+    public boolean sonAdyacentes(int origen, int destino) {
+        return this.matrizAdyacente[origen][destino].isExiste();
     }
 
     @Override
@@ -252,7 +265,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     }
 
     @Override
-    public Lista<T> aristasConectadasAConMenosPesoA(T inicio,int pesoMax) {
+    public Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(T inicio,int pesoMax) {
         int pos = buscarPosicionVertice(inicio);
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
         Lista<T> sucursalesObtenidas = new Lista<>();
@@ -260,6 +273,8 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         //AL INICIO EL HIJO ES EL INICIO(DONDE PARTO) Y EL PADRE -1 POR LO TANTO EL PESO ACUMULADO VA A SER 0
         PriorityQueue<Pair<Integer,Integer>> cola = new PriorityQueue<>();
         cola.encolar(new Pair<>(pos,0));
+        int latMax = 0;
+
         while(!cola.estaVacia()){
             //OBTENGO EL DATO DEL OBJETO QUE TIENE AL PADRE AL HIJO Y AL PESO
             Pair<Integer,Integer> par = cola.desencolar();
@@ -276,11 +291,12 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                 }
                 // SI EL PESO ACUMULADO ACTUAL <= pesoMax se agrega a la lista
                 if(par.getSecond() <= pesoMax){
+                    latMax = Math.max(latMax, par.getSecond());
                     sucursalesObtenidas.insertarOrdenado(vertices[par.getFirst()]);
                 }
             }
         }
-        return sucursalesObtenidas;
+        return new Pair<>(sucursalesObtenidas,latMax);
     }
 
     @Override
@@ -288,7 +304,8 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         return this.verticesCriticos.estaElemento(dato);
     }
 
-    private int buscarPosicionVertice(T origen) {
+    @Override
+    public int buscarPosicionVertice(T origen) {
         if(this.cantidadActualVertices == 0){
             return -1;
         }

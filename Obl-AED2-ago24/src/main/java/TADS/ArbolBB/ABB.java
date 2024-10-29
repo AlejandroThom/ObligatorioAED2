@@ -1,5 +1,7 @@
 package TADS.ArbolBB;
 
+import TADS.Pair.Pair;
+
 public class ABB <T extends Comparable<T>> implements IABB<T> {
 
     private NodoABB<T> raiz = null;
@@ -45,19 +47,22 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
     }
 
     @Override
-    public T encontrar(T element) {
-        return encontrarREC(element,raiz);
+    public Pair<T,Integer> encontrar(T element) {
+        int nodosRecorridos = 1;
+        return encontrarREC(element,raiz,nodosRecorridos);
     }
 
-    private T encontrarREC(T element, NodoABB<T> nodo) {
-        if(nodo == null) return null;
+    private Pair<T,Integer> encontrarREC(T element, NodoABB<T> nodo, int nodosRecorridos) {
+        if(nodo == null) return new Pair<>(null,nodosRecorridos);
         if(nodo.getDato().equals(element)){
-            return nodo.getDato();
+            return new Pair<>(nodo.getDato(),nodosRecorridos);
         }
         if(nodo.getDato().compareTo(element) < 0){
-            return encontrarREC(element,nodo.getHijoDerecho());
+            nodosRecorridos++;
+            return encontrarREC(element,nodo.getHijoDerecho(),nodosRecorridos);
         }else{
-            return encontrarREC(element,nodo.getHijoIzquierdo());
+            nodosRecorridos++;
+            return encontrarREC(element,nodo.getHijoIzquierdo(),nodosRecorridos);
         }
     }
 

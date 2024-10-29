@@ -1,6 +1,6 @@
 package TADS.Lista;
 
-public class Lista<T extends Comparable<T>> implements ILista<T>{
+public class Lista<T extends Comparable<T>> implements ILista<T>, Comparable<Lista<T>> {
 
     private NodoLista<T> inicio;
     private NodoLista<T> fin;
@@ -178,4 +178,8 @@ public class Lista<T extends Comparable<T>> implements ILista<T>{
         return ordenado;
     }
 
+    @Override
+    public int compareTo(Lista<T> o) {
+        return  Integer.compare(this.cantidad,o.cantidad);
+    }
 }

@@ -3,8 +3,10 @@ package sistema;
 import TADS.ArbolBB.ABB;
 import TADS.Grafo.AristaGrafo;
 import TADS.Grafo.Grafo;
+import TADS.Lista.Lista;
 import TADS.Lista.ListaConMaximo;
 import TADS.Lista.NodoLista;
+import TADS.Pair.Pair;
 import dominio.Equipo;
 import dominio.Jugador;
 import dominio.Sucursal;
@@ -47,7 +49,7 @@ public class ImplementacionSistema implements Sistema {
 
         if(nullOrEmpty(alias) || nullOrEmpty(nombre) || nullOrEmpty(apellido) || categoria == null){
             return Retorno.error1("Todos los parametros deben contar con un valor.");
-        }else if(obtenerJugador(alias) != null){
+        }else if(obtenerJugador(alias).getFirst() != null){
             return Retorno.error2("El jugador con alias " + alias + " ya existe en el sistema.");
         }
 
@@ -64,11 +66,12 @@ public class ImplementacionSistema implements Sistema {
         if(nullOrEmpty(alias)){
             return Retorno.error1("Ingrese un alias valido :)");
         }
-        Jugador jugador = obtenerJugador(alias);
+        Pair<Jugador,Integer> dupla = obtenerJugador(alias);
+        Jugador jugador = dupla.getFirst();
         if(jugador == null){
             return Retorno.error2("El jugador con alias " + alias + " no existe.");
         }
-        return  Retorno.ok(jugador.toString());
+        return  Retorno.ok(dupla.getSecond(),dupla.getFirst().toString());
     }
 
     @Override
@@ -97,7 +100,8 @@ public class ImplementacionSistema implements Sistema {
         if(nullOrEmpty(nombre) ||  nullOrEmpty(manager)){
             return Retorno.error1("Ingrese un nombre y un manager valido");
         }
-        Equipo equipo = buscarEquipo(nombre);
+        Pair<Equipo,Integer> dupla = buscarEquipo(nombre);
+        Equipo equipo = dupla.getFirst();
         if(equipo != null){
             return Retorno.error2("El equipo con el nombre " + nombre + " ya existe.");
         }
@@ -111,12 +115,14 @@ public class ImplementacionSistema implements Sistema {
             return  Retorno.error1("Ingrese un nombre y un manager valido");
         }
 
-        Equipo equipo = buscarEquipo(nombreEquipo);
+        Pair<Equipo,Integer> dupla = buscarEquipo(nombreEquipo);
+        Equipo equipo = dupla.getFirst();
         if(equipo == null){
             return Retorno.error2("El equipo " + nombreEquipo + " no existe.");
         }
 
-        Jugador jugador = obtenerJugador(aliasJugador);
+        Pair<Jugador,Integer> duplaJugador = obtenerJugador(aliasJugador);
+        Jugador jugador = duplaJugador.getFirst();
         if(jugador == null){
             return Retorno.error3("El jugador con alias " + aliasJugador + " no existe.");
         }
@@ -144,7 +150,8 @@ public class ImplementacionSistema implements Sistema {
         if(nullOrEmpty(nombreEquipo)){
             return Retorno.error1("Ingrese un nombre valido.");
         }
-        Equipo equipo = buscarEquipo(nombreEquipo);
+        Pair<Equipo,Integer> dupla = buscarEquipo(nombreEquipo);
+        Equipo equipo = dupla.getFirst();
         if(equipo == null){
             return Retorno.error2("El equipo " + nombreEquipo + " no existe.");
         }
@@ -204,15 +211,14 @@ public class ImplementacionSistema implements Sistema {
         if(nullOrEmpty(codigoSucursal1) || nullOrEmpty(codigoSucursal2))
             return Retorno.error2("Ingrese un codigo valido");
 
-        Sucursal suc1 = buscarSucursal(codigoSucursal1);
-        Sucursal suc2 = buscarSucursal(codigoSucursal2);
+        int suc1 = buscarPosSucursal(codigoSucursal1);
+        int suc2 = buscarPosSucursal(codigoSucursal2);
 
-        if(suc1 == null ){
+        if(suc1 == -1 ){
             return Retorno.error3("La sucursal con codigo " + codigoSucursal1 + " no existe.");
-        }else if(suc2 == null )
+        }else if(suc2 == -1 )
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
-        //PREGUNTAR A MICHEL SI SE TOMA EN CUENTA LA TRANSITIVIDAD( UN A ESTA CONECTADO A C PQ A -> B Y B -> C)
         if(!sucursales.sonAdyacentes(suc1,suc2))
             return Retorno.error4("Las sucursales no estan conectadas");
 
@@ -220,6 +226,7 @@ public class ImplementacionSistema implements Sistema {
 
         return Retorno.ok();
     }
+
 
     @Override
     public Retorno analizarSucursal(String codigoSucursal) {
@@ -245,10 +252,16 @@ public class ImplementacionSistema implements Sistema {
         }
         //logica
         //SE REALIZA UN BFS PARA AGREGAR A TODAS LAS SUCURSALES QUE ESTAN EN EL LIMITE
-        return Retorno.ok(sucursales.aristasConectadasAConMenosPesoA(sucursal,latenciaLimite).mostrar());
+        Pair<Lista<Sucursal>,Integer> dupla = sucursales.aristasConectadasAConMenosPesoA(sucursal,latenciaLimite);
+        return Retorno.ok(dupla.getSecond(),dupla.getFirst().mostrar());
     }
 
     // -------------------------------------------------------------------------------------- Metodos auxiliares
+
+
+    private int buscarPosSucursal(String codigoSucursal) {
+        return sucursales.buscarPosicionVertice(new Sucursal(codigoSucursal));
+    }
 
     private void agregarJuegadorACategoria(Jugador nuevoJugador) {
         if(nuevoJugador.getCategoria().getIndice() == Categoria.PRINCIPIANTE.getIndice()){
@@ -260,11 +273,11 @@ public class ImplementacionSistema implements Sistema {
         }
     }
 
-    private Equipo buscarEquipo(String nombre) {
+    private Pair<Equipo,Integer> buscarEquipo(String nombre) {
             return this.equipos.encontrar(new Equipo(nombre));
     }
 
-    private Jugador obtenerJugador(String aliasJugador) {
+    private Pair<Jugador,Integer> obtenerJugador(String aliasJugador) {
         return jugadores.encontrar(new Jugador(aliasJugador));
     }
 
