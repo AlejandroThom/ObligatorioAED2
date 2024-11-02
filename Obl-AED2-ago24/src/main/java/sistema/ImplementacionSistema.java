@@ -79,7 +79,7 @@ public class ImplementacionSistema implements Sistema {
         return Retorno.ok(jugadores.listarAscendente());
     }
 
-    //TODO: Precondicion: La categoria no puede ser nula
+    //Precondicion: La categoria no puede ser nula
     @Override
     public Retorno listarJugadoresPorCategoria(Categoria unaCategoria) {
         String listaJugadores = "";
@@ -236,7 +236,7 @@ public class ImplementacionSistema implements Sistema {
         if(sucursal == null){
             return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
         }
-        return sucursales.verticeEsCritico(sucursal) ? Retorno.ok("SI") : Retorno.ok("No");
+        return sucursales.verticeEsCritico(sucursal) ? Retorno.ok("SI") : Retorno.ok("NO");
     }
 
     @Override

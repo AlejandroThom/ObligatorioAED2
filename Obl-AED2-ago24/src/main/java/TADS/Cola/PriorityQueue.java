@@ -22,7 +22,11 @@ public class PriorityQueue<T extends Comparable<T>> implements ICola<T> {
                 if(actual.getDato().compareTo(elemento) > 0){
                     nuevo.setSiguiente(actual);
                     nuevo.setAnterior(actual.getAnterior());
-                    actual.getAnterior().setSiguiente(nuevo);
+                    if(nuevo.getAnterior() == null){
+                        this.frente = nuevo;
+                    }else{
+                        actual.getAnterior().setSiguiente(nuevo);
+                    }
                     actual.setAnterior(nuevo);
                     insertado = true;
                 }

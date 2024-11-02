@@ -34,6 +34,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.esDirigido = esDirigido;
         this.cantidadActualVertices = 0;
 
+        this.verticesCriticos = new Lista<>();
         this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
     }
@@ -221,7 +222,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
         int[] time = new int[this.cantidadMaximaVertices];
         int[] low = new int[this.cantidadMaximaVertices];
-        // voy por todos los nodos por si es no convexo
+        // voy por todos los nodos por si es no conexo
         for(int i = 0; i < this.cantidadMaximaVertices; i++){
             if(this.vertices[i] != null && !visitados[i]){
                 dfsVerticesCriticos(verticesCriticos,i,-1,visitados,time,low,1);
@@ -301,6 +302,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
 
     @Override
     public boolean verticeEsCritico(T dato) {
+        //Se podria mejorar con hashMap
         return this.verticesCriticos.estaElemento(dato);
     }
 

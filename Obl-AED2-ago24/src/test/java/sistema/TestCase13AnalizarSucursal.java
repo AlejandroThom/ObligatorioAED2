@@ -55,11 +55,11 @@ public class TestCase13AnalizarSucursal {
 
         retorno = miSistema.analizarSucursal("UYU-MVD-02");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("No",retorno.getValorString());
+        assertEquals("NO",retorno.getValorString());
 
         retorno = miSistema.analizarSucursal("PER-LIM-02");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("No",retorno.getValorString());
+        assertEquals("NO",retorno.getValorString());
 
     }
 
