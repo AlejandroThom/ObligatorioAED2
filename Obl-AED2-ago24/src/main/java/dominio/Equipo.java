@@ -7,7 +7,7 @@ public class Equipo implements Comparable<Equipo> {
     private String nombre;
     private String manager;
 
-    private ABB<Jugador> jugadores ;
+    private ABB<Jugador> jugadores;
 
     public  Equipo(String nombre, String manager) {
         this.nombre = nombre;

@@ -1,19 +1,13 @@
 package sistema;
 
 import TADS.ArbolBB.ABB;
-import TADS.Grafo.AristaGrafo;
 import TADS.Grafo.Grafo;
 import TADS.Lista.Lista;
-import TADS.Lista.ListaConMaximo;
-import TADS.Lista.NodoLista;
 import TADS.Pair.Pair;
 import dominio.Equipo;
 import dominio.Jugador;
 import dominio.Sucursal;
 import interfaz.*;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class ImplementacionSistema implements Sistema {
 

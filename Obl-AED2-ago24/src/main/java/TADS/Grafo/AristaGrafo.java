@@ -1,5 +1,8 @@
 package TADS.Grafo;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 public class AristaGrafo<T extends Comparable<T>> implements Comparable<AristaGrafo<T>> {
     private  T nodoConexion;
     private int peso;
@@ -35,4 +38,5 @@ public class AristaGrafo<T extends Comparable<T>> implements Comparable<AristaGr
     public int compareTo(AristaGrafo<T> o) {
         return nodoConexion.compareTo(o.nodoConexion);
     }
+
 }

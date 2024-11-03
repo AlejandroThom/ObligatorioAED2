@@ -30,6 +30,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T>, Comparable<Lis
     public void setFin(NodoLista<T> fin) {
         this.fin = fin;
     }
+    // -------------------------------------------------------------------------------------------------------
 
     @Override
     public void insertar(T elemento) {
@@ -143,6 +144,12 @@ public class Lista<T extends Comparable<T>> implements ILista<T>, Comparable<Lis
         }
     }
 
+    @Override
+    public void Ordenar() {
+        //TODO: Ordenar la lista
+        throw new RuntimeException("Method not implemented yet");
+    }
+
     private boolean insertarOrdenado(T elemento, NodoLista<T> actual, NodoLista<T> nuevo) {
         boolean insertado = false;
         if(actual.getElemento().compareTo(elemento) > 0){
@@ -158,11 +165,6 @@ public class Lista<T extends Comparable<T>> implements ILista<T>, Comparable<Lis
             actual = actual.getSiguiente();
         }
         return insertado;
-    }
-
-    @Override
-    public void Ordenar() {
-
     }
 
     @Override
