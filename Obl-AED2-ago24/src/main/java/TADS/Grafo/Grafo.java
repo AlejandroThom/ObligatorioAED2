@@ -123,6 +123,19 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     }
 
     @Override
+    public void agregarArista(int origen, int destino, int peso) {
+        this.matrizAdyacente[origen][destino].setPeso(peso);
+        this.matrizAdyacente[origen][destino].setExiste(true);
+        cantidadAristas++;
+        if(!this.esDirigido){
+            this.matrizAdyacente[origen][destino].setPeso(peso); //A chequear, si alias funca no va
+            this.matrizAdyacente[origen][destino].setExiste(true); //A chequear, si alias funca no va
+            cantidadAristas++;
+        }
+        actualizarVerticesCriticos();
+    }
+
+    @Override
     public void actualizarArista(T origen, T destino, int peso) {
         int iOrigen = buscarPosicionVertice(origen);
         int iDestino = buscarPosicionVertice(destino);
@@ -268,6 +281,39 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     @Override
     public Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(T inicio,int pesoMax) {
         int pos = buscarPosicionVertice(inicio);
+        boolean[] visitados = new boolean[this.cantidadMaximaVertices];
+        Lista<T> sucursalesObtenidas = new Lista<>();
+        //NECESITO AL HIJO posicion Y AL ESPIRITU SANTO(EL PESO ACUMULADO) EN LA COLA DE PRIORIDAD
+        //AL INICIO EL HIJO ES EL INICIO(DONDE PARTO) Y EL PADRE -1 POR LO TANTO EL PESO ACUMULADO VA A SER 0
+        PriorityQueue<Pair<Integer,Integer>> cola = new PriorityQueue<>();
+        cola.encolar(new Pair<>(pos,0));
+        int latMax = 0;
+
+        while(!cola.estaVacia()){
+            //OBTENGO EL DATO DEL OBJETO QUE TIENE AL PADRE AL HIJO Y AL PESO
+            Pair<Integer,Integer> par = cola.desencolar();
+            if(!visitados[par.getFirst()]){
+                //MARCO COMO VISITADO
+                visitados[par.getFirst()] = true;
+                //AGREGO A SUS 'HIJOS' A LA COLA
+                for(int i = 0; i < this.cantidadMaximaVertices; i++){
+                    Arista ar = matrizAdyacente[par.getFirst()][i];
+                    if(ar.isExiste() && ar.getPeso()+par.getSecond()<=pesoMax){
+                        Pair<Integer,Integer> nuevo = new Pair<>(i,ar.getPeso()+par.getSecond());
+                        cola.encolar(nuevo);
+                    }
+                }
+                // SI EL PESO ACUMULADO ACTUAL <= pesoMax se agrega a la lista
+                if(par.getSecond() <= pesoMax){
+                    latMax = Math.max(latMax, par.getSecond());
+                    sucursalesObtenidas.insertarOrdenado(vertices[par.getFirst()]);
+                }
+            }
+        }
+        return new Pair<>(sucursalesObtenidas,latMax);
+    }
+    @Override
+    public Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(int pos,int pesoMax) {
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
         Lista<T> sucursalesObtenidas = new Lista<>();
         //NECESITO AL HIJO posicion Y AL ESPIRITU SANTO(EL PESO ACUMULADO) EN LA COLA DE PRIORIDAD

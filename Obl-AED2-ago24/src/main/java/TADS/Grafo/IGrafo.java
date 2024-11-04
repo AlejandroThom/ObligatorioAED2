@@ -7,6 +7,7 @@ public interface IGrafo<T extends Comparable<T>> {
 //    void crearGrafoVacio(int cantMaxDeVertices);
     void agregarVertice(T vertice);
     void agregarArista(T origen, T destino, int peso);
+    void agregarArista(int origen, int destino, int peso);
     void borrarVertice(T v);
     void borrarArista(T origen, T destino);
     boolean esVacio();
@@ -16,6 +17,7 @@ public interface IGrafo<T extends Comparable<T>> {
     T obtenerVertice (T v);
     void actualizarVerticesCriticos();
     Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(T inicio, int pesoMax);
+    Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(int pos,int pesoMax);
     boolean verticeEsCritico(T dato);
     void actualizarArista(T origen, T destino, int peso);
     int buscarPosicionVertice(T origen);

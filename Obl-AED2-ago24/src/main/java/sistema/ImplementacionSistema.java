@@ -182,12 +182,12 @@ public class ImplementacionSistema implements Sistema {
         if(nullOrEmpty(codigoSucursal1) || nullOrEmpty(codigoSucursal2))
             return Retorno.error2("Ingrese un codigo valido");
 
-        Sucursal suc1 = buscarSucursal(codigoSucursal1);
-        Sucursal suc2 = buscarSucursal(codigoSucursal2);
+        int suc1 = buscarPosSucursal(codigoSucursal1);
+        int suc2 = buscarPosSucursal(codigoSucursal2);
 
-        if(suc1 == null ){
+        if(suc1 == -1 ){
             return Retorno.error3("La sucursal con codigo " + codigoSucursal1 + " no existe.");
-        }else if(suc2 == null )
+        }else if(suc2 == -1 )
             return Retorno.error3("La sucursal con codigo " + codigoSucursal2 + " no existe.");
 
         if(sucursales.sonAdyacentes(suc1,suc2))
@@ -237,8 +237,8 @@ public class ImplementacionSistema implements Sistema {
     public Retorno sucursalesParaTorneo(String codigoSucursalAnfitriona, int latenciaLimite) {
         if(nullOrEmpty(codigoSucursalAnfitriona) )
             return Retorno.error1("Ingrese un codigo valido");
-        Sucursal sucursal = buscarSucursal(codigoSucursalAnfitriona);
-        if(sucursal == null){
+        int sucursalPos = buscarPosSucursal(codigoSucursalAnfitriona);
+        if(sucursalPos == -1){
             return  Retorno.error2("La sucursal con codigo " + codigoSucursalAnfitriona + " no existe.");
         }
         if(latenciaLimite<=0){
@@ -246,7 +246,7 @@ public class ImplementacionSistema implements Sistema {
         }
         //logica
         //SE REALIZA UN BFS PARA AGREGAR A TODAS LAS SUCURSALES QUE ESTAN EN EL LIMITE
-        Pair<Lista<Sucursal>,Integer> dupla = sucursales.aristasConectadasAConMenosPesoA(sucursal,latenciaLimite);
+        Pair<Lista<Sucursal>,Integer> dupla = sucursales.aristasConectadasAConMenosPesoA(sucursalPos,latenciaLimite);
         return Retorno.ok(dupla.getSecond(),dupla.getFirst().mostrar());
     }
 
