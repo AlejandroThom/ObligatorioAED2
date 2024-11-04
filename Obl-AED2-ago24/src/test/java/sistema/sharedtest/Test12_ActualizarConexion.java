@@ -1,11 +1,12 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Sistema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
-import static sistema.TestUtil.*;
-import static sistema.TestUtil.assertError4;
+import static sistema.sharedtest.TestUtil.*;
+import static sistema.sharedtest.TestUtil.assertError4;
 
 public class Test12_ActualizarConexion {
     public static final String COD_SUCURSAL_1 = "Codigo1";

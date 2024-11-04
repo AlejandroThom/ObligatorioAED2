@@ -10,6 +10,10 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     private int cantidadActualVertices;
     private int cantidadAristas;
     private boolean esDirigido;
+
+    private T[] vertices;
+    private Arista[][] matrizAdyacente;
+
     private Lista<T> verticesCriticos;
     private boolean[] verticesCriticosArray;
 
@@ -17,8 +21,6 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         return cantidadAristas;
     }
 
-    private T[] vertices;
-    private Arista[][] matrizAdyacente;
 
     //Constructores
     public Grafo(int cantidadMaximaVertices) {
@@ -242,74 +244,81 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         // voy por todos los nodos por si es no conexo
         for(int i = 0; i < this.cantidadMaximaVertices; i++){
             if(this.vertices[i] != null && !visitados[i]){
-                dfsVerticesCriticos(verticesCriticos,i,-1,visitados,time,low,1);
+                verticesCriticosDFS(verticesCriticos,i,-1,visitados,time,low,1);
             }
         }
     }
 
-    private void dfsVerticesCriticos(Lista<T> verticesCriticos, int verticePos,int posPadre,boolean[] visitados,int[] time,int[] low,int currentTime){
+    private void verticesCriticosDFS(Lista<T> verticesCriticos, int posActual, int posPadre, boolean[] visitados, int[] time, int[] low, int currentTime){
         //Marco como visitado
-        visitados[verticePos] = true;
-        //instancio los hijos visitados
+        visitados[posActual] = true;
         int children = 0;
-        //marco el tiempo y lo más bajo que puede llegar
-        time[verticePos] = currentTime;
-        low[verticePos] = currentTime;
-        for(int i = 0; i < matrizAdyacente[verticePos].length; i++){
-            //Verifico que esten conectados y si lo están que no este visitado
-            if(matrizAdyacente[verticePos][i].isExiste() && !visitados[i]){
-                //aumento la cantidad de hijos visitados
+        //Marco el tiempo y lo más bajo que puede llegar
+        time[posActual] = currentTime;
+        low[posActual] = currentTime;
+
+        Arista[] adyacentes = matrizAdyacente[posActual];
+
+        for(int i = 0; i < adyacentes.length; i++){
+            if(adyacentes[i].isExiste() && !visitados[i]){
                 children++;
-                //voy por cada hijo del nodo
-                dfsVerticesCriticos(verticesCriticos,i, verticePos,visitados,time,low,currentTime+1);
-                // marco cual es el nodo más joven en ser descubierto al que puedo llegar
-                //a travez de mis hijos
-                low[verticePos] = Math.min(low[verticePos], low[i]);
-                //si el nodo más joven al que puede llegar mi hijo es mayor o igual a mi
-                //soy un nodo de articulación
-                if(low[i] >= time[verticePos] && posPadre != -1){
-                    verticesCriticos.insertar(this.vertices[verticePos]);
+
+                //Voy por cada hijo del nodo actual
+                verticesCriticosDFS(verticesCriticos,i, posActual,visitados,time,low,currentTime+1);
+
+                //Marco cuál es el nodo más joven en ser descubierto al que puedo llegar a travez de mi hijo
+                low[posActual] = Math.min(low[posActual], low[i]);
+
+                //Si el nodo más joven al que puede llegar mi hijo es mayor o igual a mi, soy un nodo de articulación
+                if(low[i] >= time[posActual] && posPadre != -1){
+                    verticesCriticos.insertar(this.vertices[posActual]);
                     //otra Solucion o(1)
-                    this.verticesCriticosArray[verticePos] = true;
+                    this.verticesCriticosArray[posActual] = true;
                 }else{
-                    this.verticesCriticosArray[verticePos] = false;
+                    this.verticesCriticosArray[posActual] = false;
                 }
-            }else if(matrizAdyacente[verticePos][i].isExiste() && i != posPadre){
-                //Si el nodo al que visito es distinto a de mi padre
-                // y fue descubierto antes que yo mismo , puedo llegar a un nodo más joven
-                low[verticePos] = Math.min(low[verticePos], time[i]);
+            }else if(adyacentes[i].isExiste() && i != posPadre){
+                //Si el nodo al que visito es distinto a mi padre
+                // y fue descubierto antes que yo mismo, puedo llegar a un nodo más joven
+                low[posActual] = Math.min(low[posActual], time[i]);
             }
         }
-        // si el nodo 'raiz' tiene más de un hijo visitado entonces el nodo raiz es una articulación(es critico)
+
+        //Si el nodo 'raiz' tiene más de un hijo visitado entonces el nodo raiz es una articulación (es critico)
         if(posPadre == -1 && children > 1){
-            verticesCriticos.insertar(this.vertices[verticePos]);
+            verticesCriticos.insertar(this.vertices[posActual]);
             //otra solucion o(1)
-            this.verticesCriticosArray[verticePos] = true;
+            this.verticesCriticosArray[posActual] = true;
         }
     }
 
     @Override
     public Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(T inicio,int pesoMax) {
-        int pos = buscarPosicionVertice(inicio);
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
         Lista<T> sucursalesObtenidas = new Lista<>();
-        //NECESITO AL HIJO posicion Y AL ESPIRITU SANTO(EL PESO ACUMULADO) EN LA COLA DE PRIORIDAD
+
+        int pos = buscarPosicionVertice(inicio);
+
+        //NECESITO AL PADRE, AL HIJO (posicion) Y AL ESPIRITU SANTO(EL PESO ACUMULADO) EN LA COLA DE PRIORIDAD
         //AL INICIO EL HIJO ES EL INICIO(DONDE PARTO) Y EL PADRE -1 POR LO TANTO EL PESO ACUMULADO VA A SER 0
         PriorityQueue<Pair<Integer,Integer>> cola = new PriorityQueue<>();
         cola.encolar(new Pair<>(pos,0));
         int latMax = 0;
 
         while(!cola.estaVacia()){
-            //OBTENGO EL DATO DEL OBJETO QUE TIENE AL PADRE AL HIJO Y AL PESO
+            //OBTENGO EL DATO DEL OBJETO QUE TIENE AL PADRE, AL HIJO Y AL PESO
             Pair<Integer,Integer> par = cola.desencolar();
+
             if(!visitados[par.getFirst()]){
                 //MARCO COMO VISITADO
                 visitados[par.getFirst()] = true;
+
                 //AGREGO A SUS 'HIJOS' A LA COLA
                 for(int i = 0; i < this.cantidadMaximaVertices; i++){
                     Arista ar = matrizAdyacente[par.getFirst()][i];
-                    if(ar.isExiste() && ar.getPeso()+par.getSecond()<=pesoMax){
-                        Pair<Integer,Integer> nuevo = new Pair<>(i,ar.getPeso()+par.getSecond());
+                    int pesoAcumulado = ar.getPeso()+par.getSecond();
+                    if(ar.isExiste() && pesoAcumulado <= pesoMax){
+                        Pair<Integer,Integer> nuevo = new Pair<>(i,pesoAcumulado);
                         cola.encolar(nuevo);
                     }
                 }

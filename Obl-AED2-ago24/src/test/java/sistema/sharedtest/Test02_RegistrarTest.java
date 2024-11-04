@@ -1,7 +1,8 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Categoria;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
 public class Test02_RegistrarTest {
 

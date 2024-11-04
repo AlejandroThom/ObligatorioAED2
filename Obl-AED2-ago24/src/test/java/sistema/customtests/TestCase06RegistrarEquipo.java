@@ -1,8 +1,10 @@
-package sistema;
+package sistema.customtests;
 
 import interfaz.Retorno;
 import org.junit.Before;
 import org.junit.Test;
+import sistema.ImplementacionSistema;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestCase06RegistrarEquipo {

@@ -5,7 +5,6 @@ import TADS.Pair.Pair;
 public class ABB <T extends Comparable<T>> implements IABB<T> {
 
     private NodoABB<T> raiz = null;
-
     private int longitud = 0;
 
 
@@ -36,7 +35,7 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
 
     @Override
     public void remover(T element) throws Exception {
-        throw new Exception();
+        throw new RuntimeException("Method not implemented yet");
     }
 
     private void removerREC(NodoABB<T> nodo, T element) {
@@ -77,8 +76,8 @@ public class ABB <T extends Comparable<T>> implements IABB<T> {
     }
 
     @Override
-    public void Equilibrar() {
-
+    public void Equilibrar()  {
+        throw new RuntimeException("Method not implemented yet");
     }
 
     @Override

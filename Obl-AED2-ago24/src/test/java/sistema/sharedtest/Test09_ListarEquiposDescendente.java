@@ -1,12 +1,13 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Categoria;
 import interfaz.Sistema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
-import static sistema.TestUtil.assertOk;
-import static sistema.TestUtil.copiarTexto;
+import static sistema.sharedtest.TestUtil.assertOk;
+import static sistema.sharedtest.TestUtil.copiarTexto;
 
 public class Test09_ListarEquiposDescendente {
     public static final String MARION_S_TEAM = "Marion's Team";

@@ -1,13 +1,15 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Retorno;
 import interfaz.Sistema;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestCase01InicializarSistema {
+public class Test01_InicializarSistemaTest {
     Retorno retorno;
+
 
 
     @Test

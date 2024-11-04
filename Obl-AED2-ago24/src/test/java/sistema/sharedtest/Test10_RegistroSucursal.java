@@ -1,9 +1,10 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Sistema;
 import org.junit.jupiter.api.Test;
+import sistema.ImplementacionSistema;
 
-import static sistema.TestUtil.*;
+import static sistema.sharedtest.TestUtil.*;
 
 public class Test10_RegistroSucursal {
     /**

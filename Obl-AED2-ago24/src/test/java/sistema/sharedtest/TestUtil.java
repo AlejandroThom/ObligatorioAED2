@@ -1,4 +1,4 @@
-package sistema;
+package sistema.sharedtest;
 
 import interfaz.Retorno;
 import org.junit.jupiter.api.Assertions;
