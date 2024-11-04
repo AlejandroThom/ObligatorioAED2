@@ -226,14 +226,14 @@ public class ImplementacionSistema implements Sistema {
     public Retorno analizarSucursal(String codigoSucursal) {
         if(nullOrEmpty(codigoSucursal) )
             return Retorno.error1("Ingrese un codigo valido");
-        Sucursal sucursal = buscarSucursal(codigoSucursal);
+        //Sucursal sucursal = buscarSucursal(codigoSucursal);
         //con la solucion O(n),busqueda de la posicion + O(1) en saber si es critico
-        //int posSucursal = buscarPosSucursal(codigoSucursal);
-        if(sucursal == null){
+        int posSucursal = buscarPosSucursal(codigoSucursal);
+        if(posSucursal == -1){
             return  Retorno.error2("La sucursal con codigo " + codigoSucursal + " no existe.");
         }
-        //return sucursales.verticeEsCritico(posSucursal) ? Retorno.ok("SI") : Retorno.ok("NO");
-        return sucursales.verticeEsCritico(sucursal) ? Retorno.ok("SI") : Retorno.ok("NO");
+        return sucursales.verticeEsCritico(posSucursal) ? Retorno.ok("SI") : Retorno.ok("NO");
+        //return sucursales.verticeEsCritico(sucursal) ? Retorno.ok("SI") : Retorno.ok("NO");
     }
 
     @Override

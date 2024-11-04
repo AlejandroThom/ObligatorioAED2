@@ -365,7 +365,6 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     //solucion O(1)
     @Override
     public boolean verticeEsCritico(int posdato) {
-        //Se podria mejorar con hashMap
         return this.verticesCriticosArray[posdato];
     }
 
