@@ -11,6 +11,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
     private int cantidadAristas;
     private boolean esDirigido;
     private Lista<T> verticesCriticos;
+    private boolean[] verticesCriticosArray;
 
     public int getCantidadAristas(){
         return cantidadAristas;
@@ -25,6 +26,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.esDirigido = true;
         this.cantidadActualVertices = 0;
         this.verticesCriticos = new Lista<>();
+        verticesCriticosArray = new boolean[cantidadMaximaVertices];
         this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
     }
@@ -33,7 +35,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         this.cantidadMaximaVertices = cantidadMaximaVertices;
         this.esDirigido = esDirigido;
         this.cantidadActualVertices = 0;
-
+        this.verticesCriticosArray = new boolean[cantidadMaximaVertices];
         this.verticesCriticos = new Lista<>();
         this.vertices = (T[]) new Comparable[cantidadMaximaVertices];
         iniciarMatrizAdyacenciaOptimizada();
@@ -44,12 +46,14 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
 
         if(this.esDirigido){
             for (int i = 0; i < this.cantidadMaximaVertices; i++) {
+                this.verticesCriticosArray[i] = false;
                 for (int j = 0; j < this.cantidadMaximaVertices; j++) {
                     this.matrizAdyacente[i][j] = new Arista();
                 }
             }
         }else{
             for (int i = 0; i < this.cantidadMaximaVertices; i++) {
+                this.verticesCriticosArray[i] = false;
                 for (int j = i; j < this.cantidadMaximaVertices; j++) {
                     this.matrizAdyacente[i][j] = new Arista();
                     this.matrizAdyacente[j][i] = this.matrizAdyacente[i][j];
@@ -265,6 +269,10 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                 //soy un nodo de articulación
                 if(low[i] >= time[verticePos] && posPadre != -1){
                     verticesCriticos.insertar(this.vertices[verticePos]);
+                    //otra Solucion o(1)
+                    this.verticesCriticosArray[verticePos] = true;
+                }else{
+                    this.verticesCriticosArray[verticePos] = false;
                 }
             }else if(matrizAdyacente[verticePos][i].isExiste() && i != posPadre){
                 //Si el nodo al que visito es distinto a de mi padre
@@ -275,6 +283,8 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         // si el nodo 'raiz' tiene más de un hijo visitado entonces el nodo raiz es una articulación(es critico)
         if(posPadre == -1 && children > 1){
             verticesCriticos.insertar(this.vertices[verticePos]);
+            //otra solucion o(1)
+            this.verticesCriticosArray[verticePos] = true;
         }
     }
 
@@ -345,11 +355,18 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         }
         return new Pair<>(sucursalesObtenidas,latMax);
     }
-
+    //solucion O(n)
     @Override
     public boolean verticeEsCritico(T dato) {
         //Se podria mejorar con hashMap
         return this.verticesCriticos.estaElemento(dato);
+    }
+
+    //solucion O(1)
+    @Override
+    public boolean verticeEsCritico(int posdato) {
+        //Se podria mejorar con hashMap
+        return this.verticesCriticosArray[posdato];
     }
 
     @Override
