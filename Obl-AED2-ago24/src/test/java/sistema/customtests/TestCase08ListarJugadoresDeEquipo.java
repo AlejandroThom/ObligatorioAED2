@@ -37,7 +37,7 @@ public class TestCase08ListarJugadoresDeEquipo {
 
         retorno = miSistema.listarJugadoresDeEquipo("Los magicos");
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
-        assertEquals("El Pepe;Pedro;Pedrales;Profesional|El Querto;Querty;Quertales;Profesional|El Rober;Roberto;Roblares;Profesional", retorno.getValorString());
+        assertEquals("El Pepe;Pedro;Pedrales;PROFESIONAL|El Querto;Querty;Quertales;PROFESIONAL|El Rober;Roberto;Roblares;PROFESIONAL", retorno.getValorString());
     }
 
     @Test

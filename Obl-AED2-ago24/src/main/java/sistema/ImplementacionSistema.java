@@ -255,7 +255,6 @@ public class ImplementacionSistema implements Sistema {
 
     // -------------------------------------------------------------------------------------- Metodos auxiliares
 
-
     private int buscarPosSucursal(String codigoSucursal) {
         return sucursales.buscarPosicionVertice(new Sucursal(codigoSucursal));
     }

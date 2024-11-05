@@ -27,9 +27,9 @@ public class Test05_JugadoresPorCategoria {
 
     @Test
     public void testJugadorPorCategoriaOk() {
-        assertOk(s.listarJugadoresPorCategoria(Categoria.ESTANDARD),"roberto;Roberto;Gomez;Estándar|sofia;Sofia;Bert;Estándar");
-        assertOk(s.listarJugadoresPorCategoria(Categoria.PROFESIONAL),"esteban;Esteban;Dendi;Profesional|zack;Zack;Rodriguez;Profesional");
-        assertOk(s.listarJugadoresPorCategoria(Categoria.PRINCIPIANTE),"arianna;Arianna;Op;Principiante|caliban;Caliban;Estevez;Principiante|mariana;Mariana;Perez;Principiante|otello;Otello;Shake;Principiante");
+        assertOk(s.listarJugadoresPorCategoria(Categoria.ESTANDARD),"roberto;Roberto;Gomez;ESTANDARD|sofia;Sofia;Bert;ESTANDARD");
+        assertOk(s.listarJugadoresPorCategoria(Categoria.PROFESIONAL),"esteban;Esteban;Dendi;PROFESIONAL|zack;Zack;Rodriguez;PROFESIONAL");
+        assertOk(s.listarJugadoresPorCategoria(Categoria.PRINCIPIANTE),"arianna;Arianna;Op;PRINCIPIANTE|caliban;Caliban;Estevez;PRINCIPIANTE|mariana;Mariana;Perez;PRINCIPIANTE|otello;Otello;Shake;PRINCIPIANTE");
     }
 
     @Test

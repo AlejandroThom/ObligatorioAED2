@@ -125,6 +125,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
             this.matrizAdyacente[iDestino][iOrigen].setExiste(true); //A chequear, si alias funca no va
             cantidadAristas++;
         }
+        this.verticesCriticosArray = new boolean[cantidadMaximaVertices];
         actualizarVerticesCriticos();
     }
 
@@ -138,6 +139,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
             this.matrizAdyacente[origen][destino].setExiste(true); //A chequear, si alias funca no va
             cantidadAristas++;
         }
+        this.verticesCriticosArray = new boolean[cantidadMaximaVertices];
         actualizarVerticesCriticos();
     }
 
@@ -272,10 +274,13 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                 //Si el nodo más joven al que puede llegar mi hijo es mayor o igual a mi, soy un nodo de articulación
                 if(low[i] >= time[posActual] && posPadre != -1){
                     verticesCriticos.insertar(this.vertices[posActual]);
-                    //otra Solucion o(1)
+                    //Otra Solucion o(1)
                     this.verticesCriticosArray[posActual] = true;
                 }else{
-                    this.verticesCriticosArray[posActual] = false;
+                    //Si ya esta agregado en la lista de vertices criticos, no se puede "quitar" de la lista
+                    if(!this.verticesCriticosArray[posActual]){
+                        this.verticesCriticosArray[posActual] = false;
+                    }
                 }
             }else if(adyacentes[i].isExiste() && i != posPadre){
                 //Si el nodo al que visito es distinto a mi padre
@@ -331,6 +336,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
         }
         return new Pair<>(sucursalesObtenidas,latMax);
     }
+
     @Override
     public Pair<Lista<T>,Integer> aristasConectadasAConMenosPesoA(int pos,int pesoMax) {
         boolean[] visitados = new boolean[this.cantidadMaximaVertices];
@@ -356,6 +362,7 @@ public class Grafo<T extends Comparable<T>> implements IGrafo<T> {
                     }
                 }
                 // SI EL PESO ACUMULADO ACTUAL <= pesoMax se agrega a la lista
+                // NO DEBERIA HABER UNA LATENCIA MAYOR AL MAXIMO PERO MEJOR PREVENIR
                 if(par.getSecond() <= pesoMax){
                     latMax = Math.max(latMax, par.getSecond());
                     sucursalesObtenidas.insertarOrdenado(vertices[par.getFirst()]);

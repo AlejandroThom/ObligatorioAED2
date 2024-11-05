@@ -66,7 +66,15 @@ public class Jugador implements Comparable<Jugador> {
 
     @Override
     public String toString() {
-        return this.alias + ";" + this.nombre + ";" + this.apellido + ";" + this.categoria.getTexto();
+        String categoriaImprimir = "";
+        if(this.categoria.getIndice() == Categoria.PRINCIPIANTE.getIndice()){
+            categoriaImprimir = "PRINCIPIANTE";
+        }else if(this.categoria.getIndice() == Categoria.ESTANDARD.getIndice()){
+            categoriaImprimir = "ESTANDARD";
+        }else{
+            categoriaImprimir = "PROFESIONAL";
+        }
+        return this.alias + ";" + this.nombre + ";" + this.apellido + ";" + categoriaImprimir;
     }
 
     @Override

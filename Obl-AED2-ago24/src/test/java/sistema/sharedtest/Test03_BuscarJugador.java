@@ -30,24 +30,24 @@ public class Test03_BuscarJugador {
     public void testBuscarJugadorOk() {
 
 
-        assertOk(s.buscarJugador(copiarTexto("mariana")),1,"mariana;Mariana;Perez;Principiante");
+        assertOk(s.buscarJugador(copiarTexto("mariana")),1,"mariana;Mariana;Perez;PRINCIPIANTE");
 
-        assertOk(s.buscarJugador(copiarTexto("roberto")),2,"roberto;Roberto;Gomez;Estándar");
-        assertOk(s.buscarJugador(copiarTexto("caliban")),2,"caliban;Caliban;Estevez;Principiante");
+        assertOk(s.buscarJugador(copiarTexto("roberto")),2,"roberto;Roberto;Gomez;ESTANDARD");
+        assertOk(s.buscarJugador(copiarTexto("caliban")),2,"caliban;Caliban;Estevez;PRINCIPIANTE");
 
-        assertOk(s.buscarJugador(copiarTexto("zack")),3,"zack;Zack;Rodriguez;Profesional");
-        assertOk(s.buscarJugador(copiarTexto("esteban")),3,"esteban;Esteban;Dendi;Profesional");
-        assertOk(s.buscarJugador(copiarTexto("otello")),3,"otello;Otello;Shake;Principiante");
-        assertOk(s.buscarJugador(copiarTexto("arianna")),3,"arianna;Arianna;Op;Principiante");
+        assertOk(s.buscarJugador(copiarTexto("zack")),3,"zack;Zack;Rodriguez;PROFESIONAL");
+        assertOk(s.buscarJugador(copiarTexto("esteban")),3,"esteban;Esteban;Dendi;PROFESIONAL");
+        assertOk(s.buscarJugador(copiarTexto("otello")),3,"otello;Otello;Shake;PRINCIPIANTE");
+        assertOk(s.buscarJugador(copiarTexto("arianna")),3,"arianna;Arianna;Op;PRINCIPIANTE");
 
-        assertOk(s.buscarJugador(copiarTexto("sofia")),4,"sofia;Sofia;Bert;Estándar");
+        assertOk(s.buscarJugador(copiarTexto("sofia")),4,"sofia;Sofia;Bert;ESTANDARD");
     }
 
     @Test
     public void testBuscarConReinicio() {
 
 
-        assertOk(s.buscarJugador(copiarTexto("mariana")),1,"mariana;Mariana;Perez;Principiante");
+        assertOk(s.buscarJugador(copiarTexto("mariana")),1,"mariana;Mariana;Perez;PRINCIPIANTE");
 
         s.inicializarSistema(10);//tiene que quedar vacio
         assertError2(s.buscarJugador(copiarTexto("sofia")));
@@ -60,7 +60,7 @@ public class Test03_BuscarJugador {
         assertOk(s.registrarJugador("carmela", "Nombre 5", "Apellido 5", Categoria.PROFESIONAL));
         assertOk(s.registrarJugador("mariana", "Nombre 6", "Apellido 6", Categoria.PROFESIONAL));
 
-        assertOk(s.buscarJugador("mariana"),6,"mariana;Nombre 6;Apellido 6;Profesional");
+        assertOk(s.buscarJugador("mariana"),6,"mariana;Nombre 6;Apellido 6;PROFESIONAL");
     }
 
     @Test

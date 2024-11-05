@@ -34,14 +34,14 @@ public class Test04_ListarPorAliasAscendente {
         s.registrarJugador("sofia", "Sofia", "Bert", Categoria.ESTANDARD);
 
         assertOk(s.listarJugadoresAscendente(),
-                "arianna;Arianna;Op;Principiante|" +
-                        "caliban;Caliban;Estevez;Principiante|" +
-                        "esteban;Esteban;Dendi;Profesional|" +
-                        "mariana;Mariana;Perez;Principiante|" +
-                        "otello;Otello;Shake;Principiante|" +
-                        "roberto;Roberto;Gomez;Estándar|" +
-                        "sofia;Sofia;Bert;Estándar|" +
-                        "zack;Zack;Rodriguez;Profesional");
+                "arianna;Arianna;Op;PRINCIPIANTE|" +
+                        "caliban;Caliban;Estevez;PRINCIPIANTE|" +
+                        "esteban;Esteban;Dendi;PROFESIONAL|" +
+                        "mariana;Mariana;Perez;PRINCIPIANTE|" +
+                        "otello;Otello;Shake;PRINCIPIANTE|" +
+                        "roberto;Roberto;Gomez;ESTANDARD|" +
+                        "sofia;Sofia;Bert;ESTANDARD|" +
+                        "zack;Zack;Rodriguez;PROFESIONAL");
     }
 
     @Test
@@ -54,12 +54,12 @@ public class Test04_ListarPorAliasAscendente {
         assertOk(s.registrarJugador("mariana", "Nombre 6", "Apellido 6", Categoria.PROFESIONAL));
 
         assertOk(s.listarJugadoresAscendente(),
-                "ariana;Nombre 1;Apellido 1;Profesional|" +
-                        "baltazar;Nombre 3;Apellido 3;Profesional|" +
-                        "carmela;Nombre 5;Apellido 5;Profesional|" +
-                        "mariana;Nombre 6;Apellido 6;Profesional|" +
-                        "rodrigo;Nombre 4;Apellido 4;Profesional|" +
-                        "zack;Nombre 2;Apellido 2;Profesional");
+                "ariana;Nombre 1;Apellido 1;PROFESIONAL|" +
+                        "baltazar;Nombre 3;Apellido 3;PROFESIONAL|" +
+                        "carmela;Nombre 5;Apellido 5;PROFESIONAL|" +
+                        "mariana;Nombre 6;Apellido 6;PROFESIONAL|" +
+                        "rodrigo;Nombre 4;Apellido 4;PROFESIONAL|" +
+                        "zack;Nombre 2;Apellido 2;PROFESIONAL");
 
     }
 }

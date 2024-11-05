@@ -31,33 +31,33 @@ public class TestCase05ListarJugadoresAscendentemente {
         retorno = miSistema.registrarJugador("El Pepe","Pedro","Pedrales", Categoria.ESTANDARD);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.ESTANDARD);
-        assertEquals("El Pepe;Pedro;Pedrales;Estándar",retorno.getValorString());
+        assertEquals("El Pepe;Pedro;Pedrales;ESTANDARD",retorno.getValorString());
 
         retorno = miSistema.registrarJugador("El Rober","Roberto","Roblares", Categoria.PRINCIPIANTE);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.PRINCIPIANTE);
-        assertEquals("El Rober;Roberto;Roblares;Principiante",retorno.getValorString());
+        assertEquals("El Rober;Roberto;Roblares;PRINCIPIANTE",retorno.getValorString());
 
         retorno = miSistema.registrarJugador("El Quero","Querty","Quertares", Categoria.PROFESIONAL);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.PROFESIONAL);
-        assertEquals("El Quero;Querty;Quertares;Profesional",retorno.getValorString());
+        assertEquals("El Quero;Querty;Quertares;PROFESIONAL",retorno.getValorString());
 
         //CUANDO HAY MAS DE UN ELEMENTO
         retorno = miSistema.registrarJugador("El PepeS","Pedro","Pedrales", Categoria.ESTANDARD);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.ESTANDARD);
-        assertEquals("El Pepe;Pedro;Pedrales;Estándar|El PepeS;Pedro;Pedrales;Estándar",retorno.getValorString());
+        assertEquals("El Pepe;Pedro;Pedrales;ESTANDARD|El PepeS;Pedro;Pedrales;ESTANDARD",retorno.getValorString());
 
         retorno = miSistema.registrarJugador("El RoberS","Roberto","Roblares", Categoria.PRINCIPIANTE);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.PRINCIPIANTE);
-        assertEquals("El Rober;Roberto;Roblares;Principiante|El RoberS;Roberto;Roblares;Principiante",retorno.getValorString());
+        assertEquals("El Rober;Roberto;Roblares;PRINCIPIANTE|El RoberS;Roberto;Roblares;PRINCIPIANTE",retorno.getValorString());
 
         retorno = miSistema.registrarJugador("El QueroS","Querty","Quertares", Categoria.PROFESIONAL);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresPorCategoria(Categoria.PROFESIONAL);
-        assertEquals("El Quero;Querty;Quertares;Profesional|El QueroS;Querty;Quertares;Profesional",retorno.getValorString());
+        assertEquals("El Quero;Querty;Quertares;PROFESIONAL|El QueroS;Querty;Quertares;PROFESIONAL",retorno.getValorString());
     }
 
 }

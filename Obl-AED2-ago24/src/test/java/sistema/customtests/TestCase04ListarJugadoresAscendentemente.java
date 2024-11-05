@@ -28,12 +28,12 @@ public class TestCase04ListarJugadoresAscendentemente {
         retorno = miSistema.registrarJugador("El Pepe","Pedro","Pedrales", Categoria.ESTANDARD);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresAscendente();
-        assertEquals("El Pepe;Pedro;Pedrales;Estándar",retorno.getValorString());
+        assertEquals("El Pepe;Pedro;Pedrales;ESTANDARD",retorno.getValorString());
 
         //Mas de un elemento
         retorno = miSistema.registrarJugador("El Rober","Roberto","Roblares", Categoria.PRINCIPIANTE);
         assertEquals(Retorno.Resultado.OK, retorno.getResultado());
         retorno = miSistema.listarJugadoresAscendente();
-        assertEquals("El Pepe;Pedro;Pedrales;Estándar|El Rober;Roberto;Roblares;Principiante",retorno.getValorString());
+        assertEquals("El Pepe;Pedro;Pedrales;ESTANDARD|El Rober;Roberto;Roblares;PRINCIPIANTE",retorno.getValorString());
     }
 }

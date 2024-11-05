@@ -45,14 +45,14 @@ public class Test08_ListarJugadoresEquipo {
     @Test
     public void testOk() {
         assertOk(s.listarJugadoresDeEquipo(MARION_S_TEAM),
-                "esteban;Esteban;Dendi;Profesional|" +
-                        "mariana;Mariana;Perez;Profesional|" +
-                        "otello;Otello;Shake;Profesional|" +
-                        "sofia;Sofia;Bert;Profesional|" +
-                        "zack;Zack;Rodriguez;Profesional");
+                "esteban;Esteban;Dendi;PROFESIONAL|" +
+                        "mariana;Mariana;Perez;PROFESIONAL|" +
+                        "otello;Otello;Shake;PROFESIONAL|" +
+                        "sofia;Sofia;Bert;PROFESIONAL|" +
+                        "zack;Zack;Rodriguez;PROFESIONAL");
         assertOk(s.listarJugadoresDeEquipo(ODIN),
-                "arianna;Arianna;Op;Profesional|" +
-                "caliban;Caliban;Estevez;Profesional");
+                "arianna;Arianna;Op;PROFESIONAL|" +
+                "caliban;Caliban;Estevez;PROFESIONAL");
     }
 
     @Test
@@ -62,14 +62,14 @@ public class Test08_ListarJugadoresEquipo {
         assertError6(s.agregarJugadorAEquipo(ODIN,copiarTexto("sofia")));
 
         assertOk(s.listarJugadoresDeEquipo(MARION_S_TEAM),
-                "esteban;Esteban;Dendi;Profesional|" +
-                        "mariana;Mariana;Perez;Profesional|" +
-                        "otello;Otello;Shake;Profesional|" +
-                        "sofia;Sofia;Bert;Profesional|" +
-                        "zack;Zack;Rodriguez;Profesional");
+                "esteban;Esteban;Dendi;PROFESIONAL|" +
+                        "mariana;Mariana;Perez;PROFESIONAL|" +
+                        "otello;Otello;Shake;PROFESIONAL|" +
+                        "sofia;Sofia;Bert;PROFESIONAL|" +
+                        "zack;Zack;Rodriguez;PROFESIONAL");
         assertOk(s.listarJugadoresDeEquipo(ODIN),
-                "arianna;Arianna;Op;Profesional|" +
-                        "caliban;Caliban;Estevez;Profesional");
+                "arianna;Arianna;Op;PROFESIONAL|" +
+                        "caliban;Caliban;Estevez;PROFESIONAL");
     }
 
     @Test
